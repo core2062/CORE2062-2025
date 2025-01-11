@@ -35,7 +35,7 @@ public final class Constants {
 
         public static COREConstants SpeedMod = new COREConstants("Drive Speed Modifier", 0.8);
         
-        public static final COTSTalonFXSwerveConstants chosenModule =  //TODO: This must be tuned to specific robot
+        public static final COTSTalonFXSwerveConstants chosenModule =  
         COTSTalonFXSwerveConstants.SDS.MK4i.Falcon500(COTSTalonFXSwerveConstants.SDS.MK4i.driveRatios.L2);
 
         /* Drivetrain Constants */
@@ -106,7 +106,7 @@ public final class Constants {
 
         /* Module Specific Constants */
         /* Front Left Module - Module 0 */
-        public static final class Mod0 { //TODO: This must be tuned to specific robot
+        public static final class Mod0 { 
             public static final int driveMotorID = 0;
             public static final int angleMotorID = 1;
             public static final int canCoderID = 0;
@@ -116,7 +116,7 @@ public final class Constants {
         }
 
         /* Front Right Module - Module 1 */
-        public static final class Mod1 { //TODO: This must be tuned to specific robot
+        public static final class Mod1 { 
             public static final int driveMotorID = 4;
             public static final int angleMotorID = 5;
             public static final int canCoderID = 2;
@@ -126,7 +126,7 @@ public final class Constants {
         }
         
         /* Back Left Module - Module 2 */
-        public static final class Mod2 { //TODO: This must be tuned to specific robot
+        public static final class Mod2 {
             public static final int driveMotorID = 2;
             public static final int angleMotorID = 3;
             public static final int canCoderID = 1;
@@ -136,7 +136,7 @@ public final class Constants {
         }
 
         /* Back Right Module - Module 3 */
-        public static final class Mod3 { //TODO: This must be tuned to specific robot
+        public static final class Mod3 { 
             public static final int driveMotorID = 6;
             public static final int angleMotorID = 7;
             public static final int canCoderID = 3;
@@ -163,53 +163,6 @@ public final class Constants {
             new TrapezoidProfile.Constraints(
                 kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
     }
-    public static final class LauncherConstants {
-        public static final int kUpperMotorPort = 8;
-        public static final int kLowerMotorPort = 9;
-        
-        public static final int kLeftSideMotorPort = 10;//TODO: undetermined amount, extra two might not be used
-        public static final int kRightSideMotorPort = 11;
-
-        public static final int kLeftRotationMotorPort = 12;
-        public static final int kRightRotationMotorPort = 13;
-
-        public static final int kLauncherEncoder = 4;
-
-        public static final COREConstants kSpeakerCloseAngle = new COREConstants("Speaker Close Angle", 50);
-
-        public static final COREConstants kSpeakerLaunchSpeed = new COREConstants("Speaker Launcher Speed", 0.6); //TODO: needs to be tuned
-        public static final COREConstants kAMPLaunchSpeed = new COREConstants("AMP Launcher Speed", 0.2); //TODO: needs to be tuned
-        public static final COREConstants kFeedSpeed = new COREConstants("feed Speed", 0.5); //TODO: needs to be tuned
-        public static final COREConstants kDelay = new COREConstants("Laucnher Delay", 0.5); //TODO: needs to be tuned
-
-        public static final COREConstants kLeftRotationSpeed = new COREConstants("Left Rotation Speed", 0.8); //TODO: needs to be tuned
-        public static final COREConstants kRightRotationSpeed = new COREConstants("Right Rotation Speed", 0.8); //TODO: needs to be tuned
-
-        /** Launcher Rotation Motor Constants */
-        public static double MotorPos = 0;
-
-        public static final int motorContinuousCurrentLimit = 25;
-        public static final int motorPeakCurrentLimit = 40;
-        public static final int motorPeakCurrentDuration = 100;
-        public static final boolean motorEnableCurrentLimit = true;
-  
-        public static final double kP = 0.5;
-        public static final double kI = 0.0;
-        public static final double kD = 0.0;
-        public static final double kF = 0.0;
-
-        public static final double motorOpenloopRamp = 0.25;
-        public static final double motorClosedloopRamp = 0.55;
-
-        public static LauncherRotationMotorConfigs motorConfigs = new LauncherRotationMotorConfigs();
-    }
-
-    public static final class IntakeConstants {
-
-        public static final int kIntakeMotorPort = 14;//TODO: planned on one, may be more
-
-        public static final COREConstants kIntakeSpeed = new COREConstants("intake Speed", 0.8); //TODO: needs to be tuned
-    }
 
     public static class VisionConstants{
         public static int SpeakerID = 4;
@@ -217,11 +170,5 @@ public final class Constants {
         public static int AmpID = 0;
 
         public static double DesiredAngle = 0.0;
-    }
-
-    public static class ClimberConstants{
-        public static final int kClimberMotorPort = 15;
-        public static final COREConstants kUpClimberSpeed = new COREConstants("Climber down Speed", -0.75);
-        public static final COREConstants kDownClimberSpeed = new COREConstants("Climber up Speed",0.75);
     }
 }
