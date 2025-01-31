@@ -50,6 +50,8 @@ public class Swerve extends SubsystemBase {
         try{
             Constants.AutoConstants.config = RobotConfig.fromGUISettings();
       
+            System.out.println("Configured Auto Builder");
+
             // Configure AutoBuilder
             AutoBuilder.configure(
               this::getPose, 
@@ -88,6 +90,14 @@ public class Swerve extends SubsystemBase {
             // return an empty optional when we don't want to override the path's rotation
             return Optional.empty();
         }
+    }
+
+    public void test(){
+        PPHolonomicDriveController.overrideRotationFeedback(() -> {
+            // Calculate feedback from your custom PID controller
+            return 0.0;
+        });
+        PPHolonomicDriveController.clearRotationFeedbackOverride();
     }
 
 
