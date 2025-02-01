@@ -1,34 +1,28 @@
 package frc.robot.constants;
 
+import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
 import com.ctre.phoenix6.configs.ClosedLoopRampsConfigs;
-import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.signals.InvertedValue;
 
 import frc.robot.constants.Constants.ElevatorConstants;
 
 public class ElevatorConfigs {
-    public TalonFXConfiguration motorConfig;
+    public TalonSRXConfiguration motorConfig;
 
-    public ElevatorConfigs(int motor){
-        motorConfig = new TalonFXConfiguration();
-        motorConfig.Slot0.kP = ElevatorConstants.kP;
-        motorConfig.Slot0.kP = ElevatorConstants.kI;
-        motorConfig.Slot0.kP = ElevatorConstants.kD;
-        motorConfig.Slot0.kP = ElevatorConstants.kF;
+    public ElevatorConfigs(){
+        motorConfig = new TalonSRXConfiguration();
+        motorConfig.slot0.kP = ElevatorConstants.kP;
+        motorConfig.slot0.kI = ElevatorConstants.kI;
+        motorConfig.slot0.kD = ElevatorConstants.kD;
+        motorConfig.slot0.kF = ElevatorConstants.kF;
 
-        motorConfig.CurrentLimits.SupplyCurrentLimitEnable = ElevatorConstants.kSupplyCurrentEnabled;
-        motorConfig.CurrentLimits.SupplyCurrentLimit = ElevatorConstants.kSupplyCurrentLimit;
-        motorConfig.CurrentLimits.SupplyCurrentLowerLimit = ElevatorConstants.kSupplyCurrentLowerLimit;
-        motorConfig.CurrentLimits.SupplyCurrentLowerTime = ElevatorConstants.kSupplyCurrentLowerTime;
-
-        motorConfig.OpenLoopRamps.DutyCycleOpenLoopRampPeriod = ElevatorConstants.kOpenLoopRamp;
-        motorConfig.OpenLoopRamps.VoltageOpenLoopRampPeriod = ElevatorConstants.kOpenLoopRamp;
-
-        motorConfig.ClosedLoopRamps.DutyCycleClosedLoopRampPeriod = ElevatorConstants.kClosedLoopRamp;
-        motorConfig.ClosedLoopRamps.VoltageClosedLoopRampPeriod = ElevatorConstants.kClosedLoopRamp;
-
-        if (motor == 1){
-            motorConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
-        }
+        motorConfig.continuousCurrentLimit = Constants.ElevatorConstants.motorContinuousCurrentLimit;
+        motorConfig.peakCurrentDuration = Constants.ElevatorConstants.motorPeakCurrentDuration;
+        motorConfig.peakCurrentLimit = Constants.ElevatorConstants.motorPeakCurrentLimit;
+        motorConfig.openloopRamp = Constants.ElevatorConstants.kOpenloopRamp;
+        motorConfig.closedloopRamp = Constants.ElevatorConstants.kClosedloopRamp;
+        motorConfig.motionAcceleration = 20.4;
+        motorConfig.motionCruiseVelocity = 24.8;
+        motorConfig.motionCurveStrength = 9;
     }
 }

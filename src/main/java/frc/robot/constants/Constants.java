@@ -10,7 +10,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
-
+import edu.wpi.first.wpilibj.DigitalSource;
 import frc.lib.util.COREConstants;
 import frc.lib.util.COTSTalonFXSwerveConstants;
 import frc.lib.util.SwerveModuleConstants;
@@ -39,6 +39,7 @@ public final class Constants {
     public static class ArmConstants{
 
         public static final int kArmMotorPort = 0;
+        public static final int[] kArmEncoder = {4,5};
 
     }
     public static final class Swerve {
@@ -184,18 +185,20 @@ public final class Constants {
     }
 
     public static class ElevatorConstants{
+        public static final int motorContinuousCurrentLimit = 25;
+        public static final int motorPeakCurrentLimit = 40;
+        public static final int motorPeakCurrentDuration = 100;
+        public static final boolean motorEnableCurrentLimit = true;
+  
         public static final double kP = 0.5;
         public static final double kI = 0.0;
         public static final double kD = 0.0;
         public static final double kF = 0.0;
 
-        public static final boolean kSupplyCurrentEnabled = true;
-        public static final int kSupplyCurrentLimit = 35;
-        public static final double kSupplyCurrentLowerLimit = 60;
-        public static final double kSupplyCurrentLowerTime = 0.1;
-        public static final double kClosedLoopRamp = 0.0;
-        public static final double kOpenLoopRamp = 0.25;
-        public static final int kLimitSwitchPort = 0;
+        public static final double kOpenloopRamp = 0.25;
+        public static final double kClosedloopRamp = 0.55;
+
+        public static ElevatorConfigs motorConfigs = new ElevatorConfigs();
         
         public static int[] kElevatorEncoder1 = {0,1};
         public static int[] kElevatorEncoder2 = {2,3};
