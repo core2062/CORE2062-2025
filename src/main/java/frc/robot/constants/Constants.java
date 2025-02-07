@@ -197,6 +197,7 @@ public final class Constants {
 
         public static final double kOpenloopRamp = 0.25;
         public static final double kClosedloopRamp = 0.55;
+        public static final int kLimitSwitchPort = 0;
 
         public static ElevatorConfigs motorConfigs = new ElevatorConfigs();
         
