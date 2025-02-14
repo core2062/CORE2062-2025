@@ -1,4 +1,4 @@
- Talon motor ports:
+ Swerve motor ports:
     front left drive: 0
     front left turn: 1
     back left drive: 2
@@ -7,3 +7,20 @@
     front right turn: 5
     back right drive: 6
     back right turn: 7
+
+Elevator Ports:
+   left lift motor: 8
+   right lift motor: 9
+   encoder: [0,1]
+   encoder: [2,3]
+   limit switch1: 7
+   limit switch1: 8
+
+Arm Ports:
+   rotation motor: 10
+   encoder: [4,5]
+
+Holder Ports:
+   gripper servo: 11
+   belt motor: 12
+   photoeye: 6

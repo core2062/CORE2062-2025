@@ -48,11 +48,31 @@ public class RobotContainer {
     /* Driver Buttons */
     private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
     private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+    private final JoystickButton elvatorMotorRun = new JoystickButton(driver, XboxController.Button.kA.value);
 
     /* Operator Buttons */
+    private final POVButton elevatorStage0 = new POVButton(operator, 0);
+    private final POVButton elevatorStage1 = new POVButton(operator, 90);
+    private final POVButton elevatorStage2 = new POVButton(operator, 180);
+    private final POVButton elevatorStage3 = new POVButton(operator, 270);
+
+    private final JoystickButton closeGripper = new JoystickButton(operator, 1);
+    private final JoystickButton openGripper = new JoystickButton(operator, 3);
+    private final JoystickButton runFeed1 = new JoystickButton(operator, 6);
+    private final JoystickButton runFeed2 = new JoystickButton(operator, 2);
+    private final JoystickButton tiltLeft = new JoystickButton(operator, 4);
+    private final JoystickButton tiltRight = new JoystickButton(operator, 5);
+    private final JoystickButton tiltCenter = new JoystickButton(operator, 7);
     
+    private final JoystickButton elevatorUp = new JoystickButton(operator, 8);
+    private final JoystickButton elevatorDown = new JoystickButton(operator, 9);
+    private final JoystickButton resetElevatorEncoder = new JoystickButton(operator, 10);
+
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
+    private final ArmSubsystem a_Arm = new ArmSubsystem();
+    private final HolderSubsystem h_Holder = new HolderSubsystem();
+    private final ElevatorSubsystem e_Elevator = new ElevatorSubsystem();
     private final SwerveTrackingSubsystem st_SwerveTrackSubsystem = new SwerveTrackingSubsystem();
     private final ObjectTrackingSubsystem ob_ObjectTrackingSubsystem = new ObjectTrackingSubsystem();
 
@@ -100,8 +120,30 @@ public class RobotContainer {
     private void configureButtonBindings() {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroHeading()));
+        elvatorMotorRun.onTrue(new InstantCommand(() -> e_Elevator.setLiftSpeed(Constants.ElevatorConstants.kElevatorSpeed.get(0.0))))
+                        .onFalse(new InstantCommand(() -> e_Elevator.setLiftSpeed(0.0)));
 
         /* Operator Buttons */
+        elevatorStage0.onTrue(e_Elevator.elevatorLift(1));
+        elevatorStage1.onTrue(e_Elevator.elevatorLift(2));
+        elevatorStage2.onTrue(e_Elevator.elevatorLift(3));
+        elevatorStage3.onTrue(e_Elevator.elevatorLift(4));
+    
+        closeGripper.onTrue(new InstantCommand(() -> h_Holder.setGripperPosition(20)));
+        openGripper.onTrue(new InstantCommand(() -> h_Holder.setGripperPosition(80)));
+        runFeed1.onTrue(new InstantCommand(() -> h_Holder.runBelt(0.2)))
+                .onFalse(new InstantCommand(() -> h_Holder.runBelt(0)));
+        runFeed2.onTrue(new InstantCommand(() -> h_Holder.runBelt(-0.2)))
+                .onFalse(new InstantCommand(() -> h_Holder.runBelt(0)));
+        tiltLeft.onTrue(a_Arm.rotateArm(1));
+        tiltCenter.onTrue(a_Arm.rotateArm(2));
+        tiltRight.onTrue(a_Arm.rotateArm(3));
+
+        elevatorUp.onTrue(new InstantCommand(() -> e_Elevator.setLiftSpeed(-Constants.ElevatorConstants.kElevatorSpeed.get(0.0))))
+                  .onFalse(new InstantCommand(() -> e_Elevator.setLiftSpeed(-0.00)));
+        elevatorDown.onTrue(new InstantCommand(() -> e_Elevator.setLiftSpeed(Constants.ElevatorConstants.kElevatorSpeed.get(0.0))))
+                    .onFalse(new InstantCommand(() -> e_Elevator.setLiftSpeed(-0.00)));
+        resetElevatorEncoder.onTrue(new InstantCommand(() -> e_Elevator.resetEncoder()));
     }
 
     /**

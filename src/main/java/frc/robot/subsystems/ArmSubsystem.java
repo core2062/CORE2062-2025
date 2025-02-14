@@ -4,9 +4,12 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
 import frc.robot.constants.Constants;
-import frc.robot.constants.Constants.ArmConstants;;
+import frc.robot.constants.Constants.ArmConstants;
+import frc.robot.commands.ArmMovementCommand;
 
 public class ArmSubsystem extends SubsystemBase{
     private TalonSRX armRotationMotor = new TalonSRX(ArmConstants.kArmMotorPort);
@@ -14,7 +17,13 @@ public class ArmSubsystem extends SubsystemBase{
     public double getEncoderValue() {
         return armEncoder.getDistance();
     }
+    
     public void setAngleSpeed(double speed) {
         armRotationMotor.set(ControlMode.PercentOutput, speed);
+    }
+
+    public Command rotateArm(int armPos){
+        Command rotate = new ArmMovementCommand(this, armPos);
+        return rotate;
     }
 }

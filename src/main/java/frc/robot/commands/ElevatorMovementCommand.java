@@ -1,6 +1,6 @@
 package frc.robot.commands;
 
-import frc.robot.subsystems.ElevaterSubsystem;
+import frc.robot.subsystems.ElevatorSubsystem;
 
 import java.util.function.DoubleSupplier;
 
@@ -8,12 +8,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
 public class ElevatorMovementCommand extends Command{
-    private ElevaterSubsystem l_Lift;
+    private ElevatorSubsystem l_Lift;
     private double DifferenceOfAngle;
     private int desiredPosition;
     private double pos;
 
-    public ElevatorMovementCommand(ElevaterSubsystem l_Lifter, int desiredPosition){
+    public ElevatorMovementCommand(ElevatorSubsystem l_Lifter, int desiredPosition){
         this.l_Lift = l_Lifter;
         addRequirements(l_Lift);
 
