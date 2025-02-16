@@ -32,9 +32,11 @@ public final class Constants {
     public static boolean AimDone = false;
 
     public static class HolderConstants{
-        public static final int kGripperPort = 11;
+        public static final int kGripperPort = 9;
         public static final int kBeltPort = 12;
         public static final int kPhotoEyePort = 6;
+        public static COREConstants kServoOpen = new COREConstants("Servo Angle Open", 0);
+        public static COREConstants kServoClosed = new COREConstants("Servo Angle Closed", 180);
     }
     public static class ArmConstants{
 
@@ -190,8 +192,8 @@ public final class Constants {
         public static final int motorPeakCurrentDuration = 100;
         public static final boolean motorEnableCurrentLimit = true;
   
-        public static final int kLeftLiftMotorPort = 8;
-        public static final int kRightLiftMotorPort = 9;
+        public static final int kRightLiftMotorPort = 8;
+        public static final int kLeftLiftMotorPort = 9;
 
         public static final double kP = 0.5;
         public static final double kI = 0.0;
@@ -202,11 +204,18 @@ public final class Constants {
         public static final double kClosedloopRamp = 0.55;
         public static final int kLimitSwitchPort = 7;
 
+        public static final double kReefStage1 = 0.0;
+        public static final double kReefStage2 = 9.375;
+        public static final double kReefStage3 = 0.0;
+        public static final double kReefStage4 = 0.0;
+
+
         public static ElevatorConfigs motorConfigs = new ElevatorConfigs();
         
         public static int[] kRightElevatorEncoder = {0,1};
         public static int[] kLeftElevatorEncoder = {2,3};
 
         public static COREConstants kElevatorSpeed = new COREConstants("Elevator Lift Speed", 0.8);
+        public static double kHeightOutput = 5.5;
     }
 }

@@ -26,13 +26,13 @@ public class ArmMovementCommand extends Command{
         SmartDashboard.putString("Auton State", "Begining Aimming");
         switch(desiredPosition){
             case 1:
-                pos = -30;
+                pos = -35;
                 break;
             case 2:
                 pos = 0;
                 break;
             case 3:
-                pos = 30;
+                pos = 35;
                 break;
             default:
                 pos = 0;

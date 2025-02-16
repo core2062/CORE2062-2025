@@ -2,10 +2,15 @@ package frc.robot.subsystems;
 
 import java.util.function.DoubleSupplier;
 
+import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.configs.TalonFXConfigurator;
 import com.ctre.phoenix6.controls.DutyCycleOut;
+import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.FeedbackSensorSourceValue;
 import com.ctre.phoenix6.signals.InvertedValue;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
@@ -16,8 +21,8 @@ import frc.robot.commands.ElevatorMovementCommand;
 import frc.robot.constants.Constants.ElevatorConstants;;
 
 public class ElevatorSubsystem extends SubsystemBase {
-    private TalonFX ElevatorMotorOne = new TalonFX(ElevatorConstants.kLeftLiftMotorPort);
-    private TalonFX ElevatorMotorTwo = new TalonFX(ElevatorConstants.kRightLiftMotorPort);
+    private TalonFX LeftElevatorMotor = new TalonFX(ElevatorConstants.kLeftLiftMotorPort);
+    private TalonFX RightElevatorMotor = new TalonFX(ElevatorConstants.kRightLiftMotorPort);
 
     private DigitalInput upperLimitSwitch = new DigitalInput(ElevatorConstants.kLimitSwitchPort);
     private DigitalInput lowerLimitSwitch = new DigitalInput(ElevatorConstants.kLimitSwitchPort + 1);
@@ -28,33 +33,50 @@ public class ElevatorSubsystem extends SubsystemBase {
     public static DoubleSupplier liftSpeed = () -> ElevatorConstants.kElevatorSpeed.get(0.0);
 
     DutyCycleOut m_request = new DutyCycleOut(0);
+    MotionMagicVoltage m_motmag = new MotionMagicVoltage(0);
 
     public ElevatorSubsystem(){
-        ElevatorMotorOne.getConfigurator().apply(new TalonFXConfiguration());
-        ElevatorMotorOne.getConfigurator().setPosition(0);
-        ElevatorMotorTwo.getConfigurator().apply(new TalonFXConfiguration().MotorOutput.withInverted(InvertedValue.Clockwise_Positive));
-        ElevatorMotorTwo.getConfigurator().setPosition(0);
+        var config = new TalonFXConfiguration();
+        config.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+        var slotConfigs = config.Slot0;
+
+        slotConfigs.kS = 0.24;
+        slotConfigs.kV = 0.12;
+        slotConfigs.kP = 4.8;
+        slotConfigs.kI = 0;
+        slotConfigs.kD = 0.1;
+
+        var motionMagicConfigs = config.MotionMagic;
+        motionMagicConfigs.MotionMagicCruiseVelocity = 80;
+        motionMagicConfigs.MotionMagicAcceleration = 160;
+        motionMagicConfigs.MotionMagicJerk = 1600;
+
+        LeftElevatorMotor.getConfigurator().apply(config.MotorOutput.withInverted(InvertedValue.Clockwise_Positive));
+        LeftElevatorMotor.getConfigurator().setPosition(0);
+        RightElevatorMotor.getConfigurator().apply(config.MotorOutput.withInverted(InvertedValue.CounterClockwise_Positive));
+        RightElevatorMotor.getConfigurator().setPosition(0);
         configEncoders();
+        System.out.println(config.toString());
     }
-
+    
     public void setLiftSpeed(double speed){
-        ElevatorMotorOne.setControl(m_request.withOutput(speed));
-        ElevatorMotorTwo.setControl(m_request.withOutput(speed));
+        LeftElevatorMotor.setControl(m_request.withOutput(speed));
+        RightElevatorMotor.setControl(m_request.withOutput(speed));
     }
-
+    
     public double getEncoderValue(){
         return rightElevatorEncoder.getDistance();
     }
-
+    
     public double getEncoderValue1(){
         return leftElevatorEncoder.getDistance();
     }
-
+    
     public void resetEncoder(){
         rightElevatorEncoder.reset();
         leftElevatorEncoder.reset();
     }
-
+    
     public void configEncoders(){
         // Configures the encoder to return a distance of 4 for every 256 pulses
         // Also changes the units of getRate
@@ -68,7 +90,7 @@ public class ElevatorSubsystem extends SubsystemBase {
         // Configures an encoder to average its period measurement over 5 samples
         // Can be between 1 and 127 samples
         rightElevatorEncoder.setSamplesToAverage(5);
-
+        
         // Configures the encoder to return a distance of 4 for every 256 pulses
         // Also changes the units of getRate
         leftElevatorEncoder.setDistancePerPulse(1/256);
@@ -82,16 +104,32 @@ public class ElevatorSubsystem extends SubsystemBase {
         // Can be between 1 and 127 samples
         leftElevatorEncoder.setSamplesToAverage(5);
     }
-
+    
     public Command elevatorLift(int coralPos){
         Command elevatorMovementCommand = new ElevatorMovementCommand(this, coralPos);
         return elevatorMovementCommand;
     }
-
+    
+    public void moveToHeight(double desiredHeight){
+        LeftElevatorMotor.setControl(m_motmag.withPosition(heightToRotations(desiredHeight)));
+        RightElevatorMotor.setControl(m_motmag.withPosition(heightToRotations(desiredHeight)));
+    }
+    
+    public double heightToRotations(double height){
+        double rOutput = height/ElevatorConstants.kHeightOutput;
+        double motorRotations = 10 * rOutput;
+        return motorRotations;
+    }
+    
     @Override
     public void periodic() {
+        m_motmag.Slot = 0;
         SmartDashboard.putNumber("Encoder Left Value:", getEncoderValue());
         SmartDashboard.putNumber("Encoder Right Value:", getEncoderValue1());
         SmartDashboard.putNumber("Encoder difference:", getEncoderValue() - getEncoderValue1());
+        SmartDashboard.putNumber("Motor Position 1:", LeftElevatorMotor.getRotorPosition().getValueAsDouble());
+        SmartDashboard.putNumber("Motor Position 2:", RightElevatorMotor.getRotorPosition().getValueAsDouble());
+        SmartDashboard.putNumber("elevator running 1", LeftElevatorMotor.getMotionMagicIsRunning().getValueAsDouble());
+        SmartDashboard.putNumber("elevator running 2", RightElevatorMotor.getMotionMagicIsRunning().getValueAsDouble());
     }
 }
