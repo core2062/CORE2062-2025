@@ -2,17 +2,14 @@ package frc.robot.subsystems;
 
 import java.util.function.DoubleSupplier;
 
-import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
-import com.ctre.phoenix6.configs.TalonFXConfigurator;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
-import com.ctre.phoenix6.signals.FeedbackSensorSourceValue;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
-import edu.wpi.first.wpilibj.DigitalInput;
+// import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -24,8 +21,8 @@ public class ElevatorSubsystem extends SubsystemBase {
     private TalonFX LeftElevatorMotor = new TalonFX(ElevatorConstants.kLeftLiftMotorPort);
     private TalonFX RightElevatorMotor = new TalonFX(ElevatorConstants.kRightLiftMotorPort);
 
-    private DigitalInput upperLimitSwitch = new DigitalInput(ElevatorConstants.kLimitSwitchPort);
-    private DigitalInput lowerLimitSwitch = new DigitalInput(ElevatorConstants.kLimitSwitchPort + 1);
+    // private DigitalInput upperLimitSwitch = new DigitalInput(ElevatorConstants.kLimitSwitchPort);
+    // private DigitalInput lowerLimitSwitch = new DigitalInput(ElevatorConstants.kLimitSwitchPort + 1);
 
     private Encoder leftElevatorEncoder = new Encoder(ElevatorConstants.kLeftElevatorEncoder[0], ElevatorConstants.kLeftElevatorEncoder[1]);
     private Encoder rightElevatorEncoder = new Encoder(ElevatorConstants.kRightElevatorEncoder[0], ElevatorConstants.kRightElevatorEncoder[1]);

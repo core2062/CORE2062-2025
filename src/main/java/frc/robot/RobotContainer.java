@@ -143,8 +143,8 @@ public class RobotContainer {
         // tiltCenter.onTrue(a_Arm.rotateArm(2));
         // tiltRight.onTrue(a_Arm.rotateArm(3));
 
-        tiltLeft.onTrue(new InstantCommand(() -> a_Arm.setAngleSpeed(0.25))).onFalse(new InstantCommand(() -> a_Arm.setAngleSpeed(0.0)));
-        tiltRight.onTrue(new InstantCommand(() -> a_Arm.setAngleSpeed(-0.25))).onFalse(new InstantCommand(() -> a_Arm.setAngleSpeed(0.0)));
+        tiltLeft.onTrue(new InstantCommand(() -> a_Arm.setAngleSpeed(-0.25))).onFalse(new InstantCommand(() -> a_Arm.setAngleSpeed(0.0)));
+        tiltRight.onTrue(new InstantCommand(() -> a_Arm.setAngleSpeed(0.25))).onFalse(new InstantCommand(() -> a_Arm.setAngleSpeed(0.0)));
 
         elevatorUp.onTrue(new InstantCommand(() -> e_Elevator.setLiftSpeed(Constants.ElevatorConstants.kElevatorSpeed.get(0.0))))
                   .onFalse(new InstantCommand(() -> e_Elevator.setLiftSpeed(-0.00)));
