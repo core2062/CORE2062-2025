@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import frc.lib.util.LimelightHelpers;
 import frc.robot.SwerveModule;
 import frc.robot.constants.Constants;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -19,10 +20,14 @@ import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.util.PathPlannerLogging;
+
+import edu.wpi.first.math.VecBuilder;
+import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -33,6 +38,15 @@ public class Swerve extends SubsystemBase {
     public SwerveDriveOdometry swerveOdometry;
     public SwerveModule[] mSwerveMods;
     public Pigeon2 gyro;
+
+    private final SwerveDrivePoseEstimator m_PoseEstimator = 
+        new SwerveDrivePoseEstimator(
+            Constants.Swerve.swerveKinematics, 
+            getGyroYaw(), 
+            getModulePositions(), 
+            new Pose2d(),
+            VecBuilder.fill(0.05, 0.05, Units.degreesToRadians(5)),
+            VecBuilder.fill(0.5, 0.5, Units.degreesToRadians(30)));
 
     public Swerve() {
         gyro = new Pigeon2(Constants.Swerve.pigeonID);
@@ -80,6 +94,34 @@ public class Swerve extends SubsystemBase {
             DriverStation.reportError("Failed to load PathPlanner config and configure AutoBuilder", e.getStackTrace());
           }
     }
+
+    public void updateOdometry() {
+        m_PoseEstimator.update(
+            getGyroYaw(), 
+            getModulePositions());
+
+        boolean useMegaTag2 = true; //set to false to use MegaTag1
+        boolean doRejectUpdate = false;
+
+        LimelightHelpers.SetRobotOrientation("limelight", m_PoseEstimator.getEstimatedPosition().getRotation().getDegrees(), 0, 0, 0, 0, 0);
+        LimelightHelpers.PoseEstimate mt2 = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight");
+        if(Math.abs(gyro.getAngularVelocityZWorld().getValueAsDouble()) > 720) // if our angular velocity is greater than 720 degrees per second, ignore vision updates
+        {
+            doRejectUpdate = true;
+        }
+        if(mt2.tagCount == 0)
+        {
+            doRejectUpdate = true;
+        }
+        if(!doRejectUpdate)
+        {
+            m_PoseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(.7,.7,9999999));
+            m_PoseEstimator.addVisionMeasurement(
+                mt2.pose,
+                mt2.timestampSeconds);
+        }
+    }
+
 
     public Optional<Rotation2d> getRotationTargetOverride(){
         // Some condition that should decide if we want to override rotation
