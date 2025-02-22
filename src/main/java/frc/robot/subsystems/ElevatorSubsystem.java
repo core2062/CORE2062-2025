@@ -35,6 +35,8 @@ public class ElevatorSubsystem extends SubsystemBase {
     public ElevatorSubsystem(){
         var config = new TalonFXConfiguration();
         config.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+        config.HardwareLimitSwitch.ReverseLimitAutosetPositionEnable = true;
+        config.HardwareLimitSwitch.ReverseLimitAutosetPositionValue = 0;
         var slotConfigs = config.Slot0;
 
         slotConfigs.kS = 0.24;
@@ -108,8 +110,8 @@ public class ElevatorSubsystem extends SubsystemBase {
     }
     
     public void moveToHeight(double desiredHeight){
-        LeftElevatorMotor.setControl(m_motmag.withPosition(heightToRotations(desiredHeight)));
-        RightElevatorMotor.setControl(m_motmag.withPosition(heightToRotations(desiredHeight)));
+        LeftElevatorMotor.setControl(m_motmag.withPosition(heightToRotations(desiredHeight-16.75)));
+        RightElevatorMotor.setControl(m_motmag.withPosition(heightToRotations(desiredHeight-16.75)));
     }
     
     public double heightToRotations(double height){

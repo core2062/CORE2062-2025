@@ -18,13 +18,11 @@ public class ArmSubsystem extends SubsystemBase{
     private TalonSRX armRotationMotor = new TalonSRX(ArmConstants.kArmMotorPort);
     private Encoder armEncoder = new Encoder(ArmConstants.kArmEncoder[0], ArmConstants.kArmEncoder[1]);
 
-    // private TalonSRXConfiguration
-
     public ArmSubsystem(){
         armRotationMotor.setNeutralMode(NeutralMode.Brake);
         armRotationMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
         armRotationMotor.setSelectedSensorPosition(0.0);
-    }    
+    }
 
     public double getEncoderValue() {
         return armRotationMotor.getSelectedSensorPosition(0) * 0.087890625;

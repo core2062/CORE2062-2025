@@ -62,9 +62,9 @@ public class RobotContainer {
     private final JoystickButton openGripper = new JoystickButton(operator, Logitech.Button.kX.value);
     private final JoystickButton runFeed1 = new JoystickButton(operator, Logitech.Button.kRightBumper.value);
     private final JoystickButton runFeed2 = new JoystickButton(operator, Logitech.Button.kLeftBumper.value);
-    private final JoystickButton tiltLeft = new JoystickButton(operator, Logitech.Button.kLeftTrigger.value);
-    private final JoystickButton tiltRight = new JoystickButton(operator, Logitech.Button.kRightTrigger.value);
-    private final JoystickButton tiltCenter = new JoystickButton(operator, Logitech.Button.kStart.value);
+    // private final JoystickButton tiltLeft = new JoystickButton(operator, Logitech.Button.kLeftTrigger.value);
+    // private final JoystickButton tiltRight = new JoystickButton(operator, Logitech.Button.kRightTrigger.value);
+    // private final JoystickButton tiltCenter = new JoystickButton(operator, Logitech.Button.kStart.value);
     
     private final JoystickButton elevatorUp = new JoystickButton(operator, Logitech.Button.kA.value);
     private final JoystickButton elevatorDown = new JoystickButton(operator, Logitech.Button.kB.value);
@@ -112,6 +112,13 @@ public class RobotContainer {
      */
     private void registerCommands(){
         NamedCommands.registerCommand("Pause Movement", new TeleopSwerve(s_Swerve, () -> 0, () -> 0, () -> 0, () -> false));
+        
+        NamedCommands.registerCommand("Reef Stage 1", new ElevatorMovementCommand(e_Elevator, 1));
+        NamedCommands.registerCommand("Reef Stage 2", new ElevatorMovementCommand(e_Elevator, 2));
+        NamedCommands.registerCommand("Reef Stage 3", new ElevatorMovementCommand(e_Elevator, 3));
+        NamedCommands.registerCommand("Reef Stage 4", new ElevatorMovementCommand(e_Elevator, 4));
+
+        NamedCommands.registerCommand("Reef Stage 4", new ElevatorMovementCommand(e_Elevator, 4));
     }
 
     /**
@@ -143,8 +150,8 @@ public class RobotContainer {
         // tiltCenter.onTrue(a_Arm.rotateArm(2));
         // tiltRight.onTrue(a_Arm.rotateArm(3));
 
-        tiltLeft.onTrue(new InstantCommand(() -> a_Arm.setAngleSpeed(-0.25))).onFalse(new InstantCommand(() -> a_Arm.setAngleSpeed(0.0)));
-        tiltRight.onTrue(new InstantCommand(() -> a_Arm.setAngleSpeed(0.25))).onFalse(new InstantCommand(() -> a_Arm.setAngleSpeed(0.0)));
+        // tiltLeft.onTrue(new InstantCommand(() -> a_Arm.setAngleSpeed(-0.25))).onFalse(new InstantCommand(() -> a_Arm.setAngleSpeed(0.0)));
+        // tiltRight.onTrue(new InstantCommand(() -> a_Arm.setAngleSpeed(0.25))).onFalse(new InstantCommand(() -> a_Arm.setAngleSpeed(0.0)));
 
         elevatorUp.onTrue(new InstantCommand(() -> e_Elevator.setLiftSpeed(Constants.ElevatorConstants.kElevatorSpeed.get(0.0))))
                   .onFalse(new InstantCommand(() -> e_Elevator.setLiftSpeed(-0.00)));

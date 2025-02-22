@@ -39,15 +39,8 @@ public class Swerve extends SubsystemBase {
     public SwerveModule[] mSwerveMods;
     public Pigeon2 gyro;
 
-    private final SwerveDrivePoseEstimator m_PoseEstimator = 
-        new SwerveDrivePoseEstimator(
-            Constants.Swerve.swerveKinematics, 
-            getGyroYaw(), 
-            getModulePositions(), 
-            new Pose2d(),
-            VecBuilder.fill(0.05, 0.05, Units.degreesToRadians(5)),
-            VecBuilder.fill(0.5, 0.5, Units.degreesToRadians(30)));
-
+    // private final SwerveDrivePoseEstimator m_PoseEstimator;
+    
     public Swerve() {
         gyro = new Pigeon2(Constants.Swerve.pigeonID);
         gyro.getConfigurator().apply(new Pigeon2Configuration());
@@ -59,6 +52,15 @@ public class Swerve extends SubsystemBase {
             new SwerveModule(2, Constants.Swerve.Mod2.constants),
             new SwerveModule(3, Constants.Swerve.Mod3.constants)
         };
+
+        // m_PoseEstimator  = 
+        // new SwerveDrivePoseEstimator(
+        //     Constants.Swerve.swerveKinematics, 
+        //     getGyroYaw(), 
+        //     getModulePositions(), 
+        //     new Pose2d(),
+        //     VecBuilder.fill(0.05, 0.05, Units.degreesToRadians(5)),
+        //     VecBuilder.fill(0.5, 0.5, Units.degreesToRadians(30)));
         
         swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getGyroYaw(), getModulePositions());
         try{
@@ -96,30 +98,29 @@ public class Swerve extends SubsystemBase {
     }
 
     public void updateOdometry() {
-        m_PoseEstimator.update(
-            getGyroYaw(), 
-            getModulePositions());
+        // m_PoseEstimator.update(
+        //     getGyroYaw(), 
+        //     getModulePositions());
 
-        boolean useMegaTag2 = true; //set to false to use MegaTag1
-        boolean doRejectUpdate = false;
+        // boolean doRejectUpdate = false;
 
-        LimelightHelpers.SetRobotOrientation("limelight", m_PoseEstimator.getEstimatedPosition().getRotation().getDegrees(), 0, 0, 0, 0, 0);
-        LimelightHelpers.PoseEstimate mt2 = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight");
-        if(Math.abs(gyro.getAngularVelocityZWorld().getValueAsDouble()) > 720) // if our angular velocity is greater than 720 degrees per second, ignore vision updates
-        {
-            doRejectUpdate = true;
-        }
-        if(mt2.tagCount == 0)
-        {
-            doRejectUpdate = true;
-        }
-        if(!doRejectUpdate)
-        {
-            m_PoseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(.7,.7,9999999));
-            m_PoseEstimator.addVisionMeasurement(
-                mt2.pose,
-                mt2.timestampSeconds);
-        }
+        // LimelightHelpers.SetRobotOrientation("limelight", m_PoseEstimator.getEstimatedPosition().getRotation().getDegrees(), 0, 0, 0, 0, 0);
+        // LimelightHelpers.PoseEstimate mt2 = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight");
+        // if(Math.abs(gyro.getAngularVelocityZWorld().getValueAsDouble()) > 720) // if our angular velocity is greater than 720 degrees per second, ignore vision updates
+        // {
+        //     doRejectUpdate = true;
+        // }
+        // if(mt2.tagCount == 0)
+        // {
+        //     doRejectUpdate = true;
+        // }
+        // if(!doRejectUpdate)
+        // {
+        //     m_PoseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(.7,.7,9999999));
+        //     m_PoseEstimator.addVisionMeasurement(
+        //         mt2.pose,
+        //         mt2.timestampSeconds);
+        // }
     }
 
 
@@ -190,10 +191,15 @@ public class Swerve extends SubsystemBase {
     }
 
     public Pose2d getPose() {
-        return swerveOdometry.getPoseMeters();
+        // try{
+            // return m_PoseEstimator.getEstimatedPosition();
+        // }catch(NullPointerException n){
+            return swerveOdometry.getPoseMeters();
+        // }
     }
 
     public void setPose(Pose2d pose) {
+        // m_PoseEstimator.resetPosition(getGyroYaw(), getModulePositions(), pose);
         swerveOdometry.resetPosition(getGyroYaw(), getModulePositions(), pose);
     }
 
@@ -203,10 +209,12 @@ public class Swerve extends SubsystemBase {
 
     public void setHeading(Rotation2d heading){
         swerveOdometry.resetPosition(getGyroYaw(), getModulePositions(), new Pose2d(getPose().getTranslation(), heading));
+        // m_PoseEstimator.resetPosition(getGyroYaw(), getModulePositions(), new Pose2d(getPose().getTranslation(), heading));
     }
 
     public void zeroHeading(){
         swerveOdometry.resetPosition(getGyroYaw(), getModulePositions(), new Pose2d(getPose().getTranslation(), new Rotation2d()));
+        // m_PoseEstimator.resetPosition(getGyroYaw(), getModulePositions(), new Pose2d(getPose().getTranslation(), new Rotation2d()));
     }
 
     public Rotation2d getGyroYaw() {
@@ -231,6 +239,7 @@ public class Swerve extends SubsystemBase {
 
     @Override
     public void periodic(){
+        updateOdometry();
         swerveOdometry.update(getGyroYaw(), getModulePositions());
 
         for(SwerveModule mod : mSwerveMods){

@@ -12,6 +12,8 @@ import edu.wpi.first.util.datalog.StringLogEntry;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.PowerDistribution;
+import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -39,6 +41,9 @@ public class Robot extends TimedRobot {
   private final SendableChooser<String> m_driveSpeedchooser = new SendableChooser<>();
 
   public static CTREConfigs ctreConfigs;
+
+  PowerDistribution m_pdp = new PowerDistribution(1, ModuleType.kRev);
+
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -94,6 +99,12 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
+
+    double current8 = m_pdp.getCurrent(8);
+    SmartDashboard.putNumber("Current Channel 8", current8);
+    double current9 = m_pdp.getCurrent(9);
+    SmartDashboard.putNumber("Current Channel 9", current9);
+
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
