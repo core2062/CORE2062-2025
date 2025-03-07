@@ -39,23 +39,27 @@ public class ElevatorSubsystem extends SubsystemBase {
         config.HardwareLimitSwitch.ReverseLimitAutosetPositionValue = 0;
         var slotConfigs = config.Slot0;
 
-        slotConfigs.kS = 0.24;
-        slotConfigs.kV = 0.12;
-        slotConfigs.kP = 4.8;
+        slotConfigs.kG = 2;
+        slotConfigs.kS = 0.0;
+        slotConfigs.kV = 0.0;
+        slotConfigs.kP = 0.0;
         slotConfigs.kI = 0;
-        slotConfigs.kD = 0.1;
+        slotConfigs.kD = 0.0;
+
+        config.Slot0 = slotConfigs;
 
         var motionMagicConfigs = config.MotionMagic;
-        motionMagicConfigs.MotionMagicCruiseVelocity = 80;
-        motionMagicConfigs.MotionMagicAcceleration = 160;
-        motionMagicConfigs.MotionMagicJerk = 1600;
+        motionMagicConfigs.MotionMagicCruiseVelocity = 10;
+        motionMagicConfigs.MotionMagicAcceleration = 20;
+        motionMagicConfigs.MotionMagicJerk = 160;
+
+        config.MotionMagic = motionMagicConfigs;
 
         LeftElevatorMotor.getConfigurator().apply(config.MotorOutput.withInverted(InvertedValue.Clockwise_Positive));
         LeftElevatorMotor.getConfigurator().setPosition(0);
         RightElevatorMotor.getConfigurator().apply(config.MotorOutput.withInverted(InvertedValue.CounterClockwise_Positive));
         RightElevatorMotor.getConfigurator().setPosition(0);
         configEncoders();
-        System.out.println(config.toString());
     }
     
     public void setLiftSpeed(double speed){
@@ -112,6 +116,11 @@ public class ElevatorSubsystem extends SubsystemBase {
     public void moveToHeight(double desiredHeight){
         LeftElevatorMotor.setControl(m_motmag.withPosition(heightToRotations(desiredHeight-16.75)));
         RightElevatorMotor.setControl(m_motmag.withPosition(heightToRotations(desiredHeight-16.75)));
+    }
+
+    public void holdHeight(){
+        LeftElevatorMotor.setControl(m_motmag.withPosition(LeftElevatorMotor.getPosition().getValueAsDouble()));
+        RightElevatorMotor.setControl(m_motmag.withPosition(RightElevatorMotor.getPosition().getValueAsDouble()));
     }
     
     public double heightToRotations(double height){

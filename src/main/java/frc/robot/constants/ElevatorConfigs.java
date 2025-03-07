@@ -1,9 +1,6 @@
 package frc.robot.constants;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
-import com.ctre.phoenix6.configs.ClosedLoopRampsConfigs;
-import com.ctre.phoenix6.signals.InvertedValue;
-
 import frc.robot.constants.Constants.ElevatorConstants;
 
 public class ElevatorConfigs {

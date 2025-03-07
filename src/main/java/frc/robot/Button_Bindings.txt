@@ -2,5 +2,18 @@
 Y button: Zeros gyro
 Left Bumper: robot Centric(forward is robots forward)
 
-
 ---Operator
+D-Pad Up: Move to highest pose
+D-Pad Left: Move to T2
+D-Pad Right: Move to T3
+D-Pad Down: Move to lowest Pose
+
+A button: Elevator Up
+B button: Elevator Down
+X button: Open Gripper/Clamp
+Y button: Close Gripper/Clamp
+
+Left Bumper: Feed Coral Out Left
+Right Bumper: Feed Coral Out Right
+Left Trigger: Algae Intake
+Right Trigger: Algae Outtake

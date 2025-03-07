@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 8.037102272727275,
+        "y": 6.313480113636364
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 6.651051136363637,
+        "y": 6.353366477272727
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.06806433868666,
+        "y": 5.243783813950026
+      },
+      "prevControl": {
+        "x": 5.556672293232115,
+        "y": 5.83210767758639
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Shark Bait Path Point 1"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -31.678915063092045
+  },
+  "reversed": false,
+  "folder": null,
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -90.21384994271396
+  },
+  "useDefaultConstraints": true
+}

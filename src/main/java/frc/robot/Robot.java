@@ -6,10 +6,6 @@ package frc.robot;
 
 import java.util.Optional;
 
-import com.pathplanner.lib.commands.FollowPathCommand;
-
-import edu.wpi.first.util.datalog.StringLogEntry;
-import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.PowerDistribution;

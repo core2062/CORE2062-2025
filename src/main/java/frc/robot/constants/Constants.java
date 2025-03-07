@@ -10,7 +10,6 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.DigitalSource;
 import frc.lib.util.COREConstants;
 import frc.lib.util.COTSTalonFXSwerveConstants;
 import frc.lib.util.SwerveModuleConstants;
@@ -35,8 +34,8 @@ public final class Constants {
         public static final int kGripperPort = 9;
         public static final int kBeltPort = 12;
         public static final int kPhotoEyePort = 6;
-        public static COREConstants kServoOpen = new COREConstants("Servo Angle Open", 0);
-        public static COREConstants kServoClosed = new COREConstants("Servo Angle Closed", 90);
+        public static COREConstants kServoOpen = new COREConstants("Servo Angle Open", 500);
+        public static COREConstants kServoClosed = new COREConstants("Servo Angle Closed", 2500);
     }
     public static class ArmConstants{
 
