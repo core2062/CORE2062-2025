@@ -32,7 +32,7 @@ public class Swerve extends SubsystemBase {
     // private final SwerveDrivePoseEstimator m_PoseEstimator;
     
     public Swerve() {
-        gyro = new Pigeon2(Constants.Swerve.pigeonID);
+        gyro = new Pigeon2(Constants.Swerve.pigeonID, "Swerve");
         gyro.getConfigurator().apply(new Pigeon2Configuration());
         gyro.reset();
 

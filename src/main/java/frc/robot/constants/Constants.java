@@ -34,8 +34,8 @@ public final class Constants {
         public static final int kGripperPort = 9;
         public static final int kBeltPort = 12;
         public static final int kPhotoEyePort = 6;
-        public static COREConstants kServoOpen = new COREConstants("Servo Angle Open", 500);
-        public static COREConstants kServoClosed = new COREConstants("Servo Angle Closed", 2500);
+        public static COREConstants kServoOpen = new COREConstants("Servo Angle Open", 1000);
+        public static COREConstants kServoClosed = new COREConstants("Servo Angle Closed", 2400);
     }
     public static class ArmConstants{
 

@@ -45,12 +45,13 @@ public class RobotContainer {
 
     private final JoystickButton closeGripper = new JoystickButton(operator, Logitech.Button.kY.value);
     private final JoystickButton openGripper = new JoystickButton(operator, Logitech.Button.kX.value);
-    private final JoystickButton runFeed1 = new JoystickButton(operator, Logitech.Button.kRightBumper.value);
-    private final JoystickButton runFeed2 = new JoystickButton(operator, Logitech.Button.kLeftBumper.value);
+    private final JoystickButton runFeedRight = new JoystickButton(operator, Logitech.Button.kRightBumper.value);
+    private final JoystickButton runFeedLeft = new JoystickButton(operator, Logitech.Button.kLeftBumper.value);
     
     private final JoystickButton elevatorUp = new JoystickButton(operator, Logitech.Button.kA.value);
     private final JoystickButton elevatorDown = new JoystickButton(operator, Logitech.Button.kB.value);
-
+    
+    private final JoystickButton commandGripper = new JoystickButton(operator, Logitech.Button.kA.value);
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
     private final HolderSubsystem h_Holder = new HolderSubsystem();
@@ -96,9 +97,8 @@ public class RobotContainer {
         NamedCommands.registerCommand("Reef Stage 3", new ElevatorMovementCommand(e_Elevator, 3));
         NamedCommands.registerCommand("Reef Stage 4", new ElevatorMovementCommand(e_Elevator, 4));
 
-        NamedCommands.registerCommand("Run Feed Left", new InstantCommand(() -> h_Holder.runBelt(0.8)));
-        NamedCommands.registerCommand("Run Feed Right", new InstantCommand(() -> h_Holder.runBelt(-0.8)));
-        NamedCommands.registerCommand("Stop Feed", new InstantCommand(() -> h_Holder.runBelt(0)));
+        NamedCommands.registerCommand("Run Feed Left", new ReleaseGripperFeedCommand(h_Holder, -0.8));
+        NamedCommands.registerCommand("Run Feed Right", new ReleaseGripperFeedCommand(h_Holder, 0.8));
         
         NamedCommands.registerCommand("Open Gripper", new InstantCommand(() -> h_Holder.setGripperPosition(1)));
         NamedCommands.registerCommand("Close Gripper", new InstantCommand(() -> h_Holder.setGripperPosition(2)));
@@ -115,24 +115,22 @@ public class RobotContainer {
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroHeading()));
 
         /* Operator Buttons */
-        elevatorStage0.onTrue(new InstantCommand(() -> e_Elevator.moveToHeight(ElevatorConstants.kReefStage1)));
-        elevatorStage1.onTrue(new InstantCommand(() -> e_Elevator.moveToHeight(ElevatorConstants.kReefStage2)));
-        elevatorStage2.onTrue(new InstantCommand(() -> e_Elevator.moveToHeight(ElevatorConstants.kReefStage3)));
-        elevatorStage3.onTrue(new InstantCommand(() -> e_Elevator.moveToHeight(ElevatorConstants.kReefStage2))); 
-        elevatorStage0.and(elevatorStage1).and(elevatorStage2).and(elevatorStage3).onFalse(new InstantCommand(() -> e_Elevator.setLiftSpeed(0.0)));
+        // elevatorStage0.onTrue(new InstantCommand(() -> e_Elevator.moveToHeight(ElevatorConstants.kReefStage1)));
+        // elevatorStage1.onTrue(new InstantCommand(() -> e_Elevator.moveToHeight(ElevatorConstants.kReefStage2)));
+        // elevatorStage2.onTrue(new InstantCommand(() -> e_Elevator.moveToHeight(ElevatorConstants.kReefStage3)));
+        // elevatorStage3.onTrue(new InstantCommand(() -> e_Elevator.moveToHeight(ElevatorConstants.kReefStage2))); 
+        // elevatorStage0.and(elevatorStage1).and(elevatorStage2).and(elevatorStage3).onFalse(new InstantCommand(() -> e_Elevator.setLiftSpeed(0.0)));
         // elevatorStage0.and(elevatorStage1).and(elevatorStage2).and(elevatorStage3).onFalse(new InstantCommand(() -> e_Elevator.holdHeight()));
     
-        closeGripper.whileTrue(new InstantCommand(() -> h_Holder.setGripperPosition(2)));
-        openGripper.whileTrue(new InstantCommand(() -> h_Holder.setGripperPosition(1)));
-        runFeed1.onTrue(new InstantCommand(() -> h_Holder.runBelt(0.8)))
-                .onFalse(new InstantCommand(() -> h_Holder.runBelt(0)));
-        runFeed2.onTrue(new InstantCommand(() -> h_Holder.runBelt(-0.8)))
-                .onFalse(new InstantCommand(() -> h_Holder.runBelt(0)));
+        closeGripper.onTrue(new InstantCommand(() -> h_Holder.setGripperPosition(2)));
+        openGripper.onTrue(new InstantCommand(() -> h_Holder.setGripperPosition(1)));
+        runFeedRight.whileTrue(new ReleaseGripperFeedCommand(h_Holder, -0.8));
+        runFeedLeft.whileTrue(new ReleaseGripperFeedCommand(h_Holder, 0.8));
 
-        elevatorUp.onTrue(new InstantCommand(() -> e_Elevator.setLiftSpeed(Constants.ElevatorConstants.kElevatorSpeed.get(0.0))))
-                  .onFalse(new InstantCommand(() -> e_Elevator.setLiftSpeed(-0.00)));
-        elevatorDown.onTrue(new InstantCommand(() -> e_Elevator.setLiftSpeed(-Constants.ElevatorConstants.kElevatorSpeed.get(0.0))))
-                    .onFalse(new InstantCommand(() -> e_Elevator.setLiftSpeed(-0.00)));
+        // elevatorUp.onTrue(new InstantCommand(() -> e_Elevator.setLiftSpeed(Constants.ElevatorConstants.kElevatorSpeed.get(0.0))))
+                //   .onFalse(new InstantCommand(() -> e_Elevator.setLiftSpeed(-0.00)));
+        // elevatorDown.onTrue(new InstantCommand(() -> e_Elevator.setLiftSpeed(-Constants.ElevatorConstants.kElevatorSpeed.get(0.0))))
+                    // .onFalse(new InstantCommand(() -> e_Elevator.setLiftSpeed(-0.00)));
     }
 
     /**

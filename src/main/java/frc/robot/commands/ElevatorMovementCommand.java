@@ -43,7 +43,7 @@ public class ElevatorMovementCommand extends Command{
     @Override
     public void execute() {
         // System.out.println(desiredAngle.getAsDouble());
-        double currentPos = l_Lift.getEncoderValue();
+        double currentPos = 0;
         final double MAX_SPEED_RPM = 3; // Maximum speed of the motor in RPM
         final double ANGLE_TOLERANCE = 1.0;
         // Calculate the angle difference
