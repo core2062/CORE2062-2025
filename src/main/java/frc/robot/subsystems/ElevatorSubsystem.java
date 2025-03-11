@@ -39,26 +39,29 @@ public class ElevatorSubsystem extends SubsystemBase {
         config.HardwareLimitSwitch.ReverseLimitAutosetPositionValue = 0;
         var slotConfigs = config.Slot0;
 
-        slotConfigs.kG = 2;
+        // slotConfigs.kG = 2;
         slotConfigs.kS = 0.0;
         slotConfigs.kV = 0.0;
         slotConfigs.kP = 0.0;
-        slotConfigs.kI = 0;
+        slotConfigs.kI = 0.0;
         slotConfigs.kD = 0.0;
 
         config.Slot0 = slotConfigs;
 
         var motionMagicConfigs = config.MotionMagic;
-        motionMagicConfigs.MotionMagicCruiseVelocity = 10;
-        motionMagicConfigs.MotionMagicAcceleration = 20;
+        motionMagicConfigs.MotionMagicCruiseVelocity = 5;
+        motionMagicConfigs.MotionMagicAcceleration = 10;
         motionMagicConfigs.MotionMagicJerk = 160;
 
         config.MotionMagic = motionMagicConfigs;
 
-        LeftElevatorMotor.getConfigurator().apply(config.MotorOutput.withInverted(InvertedValue.CounterClockwise_Positive));
+        LeftElevatorMotor.getConfigurator().apply(config.MotorOutput.withInverted(InvertedValue.Clockwise_Positive));
         LeftElevatorMotor.getConfigurator().setPosition(0);
-        RightElevatorMotor.getConfigurator().apply(config.MotorOutput.withInverted(InvertedValue.Clockwise_Positive));
+        RightElevatorMotor.getConfigurator().apply(config.MotorOutput.withInverted(InvertedValue.CounterClockwise_Positive));
         RightElevatorMotor.getConfigurator().setPosition(0);
+        System.out.println(config.toString());
+        System.out.println(LeftElevatorMotor.getConfigurator().equals(config));
+        System.out.println(RightElevatorMotor.getConfigurator().equals(config));
         // configEncoders();
     }
     
@@ -114,8 +117,8 @@ public class ElevatorSubsystem extends SubsystemBase {
     }
     
     public void moveToHeight(double desiredHeight){
-        LeftElevatorMotor.setControl(m_motmag.withPosition(heightToRotations(desiredHeight-16.75)));
-        RightElevatorMotor.setControl(m_motmag.withPosition(heightToRotations(desiredHeight-16.75)));
+        LeftElevatorMotor.setControl(m_motmag.withPosition(heightToRotations(desiredHeight-19.5)));
+        RightElevatorMotor.setControl(m_motmag.withPosition(heightToRotations(desiredHeight-19.5)));
     }
 
     public void holdHeight(){

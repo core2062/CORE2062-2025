@@ -194,7 +194,7 @@ public final class Constants {
         public static final int kRightLiftMotorPort = 8;
         public static final int kLeftLiftMotorPort = 9;
 
-        public static final double kP = 0.5;
+        public static final double kP = 2.0;
         public static final double kI = 0.0;
         public static final double kD = 0.0;
         public static final double kF = 0.0;
@@ -207,9 +207,9 @@ public final class Constants {
         /* height from floor to heighest point on each reef rung */
         /* height command removes height from floor to base of scoring mechanism */
         public static final double kReefStage1 = 0.0;
-        public static final double kReefStage2 = 31.875;
-        public static final double kReefStage3 = 47.625;
-        public static final double kReefStage4 = 72.0;
+        public static final double kReefStage2 = 29.375;
+        public static final double kReefStage3 = 45.625;
+        public static final double kReefStage4 = 70.0;
 
 
         public static ElevatorConfigs motorConfigs = new ElevatorConfigs();
@@ -218,6 +218,6 @@ public final class Constants {
         public static int[] kLeftElevatorEncoder = {2,3};
 
         public static COREConstants kElevatorSpeed = new COREConstants("Elevator Lift Speed", 0.8);
-        public static double kHeightOutput = 16.75;
+        public static double kHeightOutput = 13.25;
     }
 }
