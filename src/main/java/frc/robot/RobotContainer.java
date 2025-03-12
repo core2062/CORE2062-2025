@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.lib.util.Logitech;
 import frc.robot.commands.*;
 import frc.robot.constants.Constants;
@@ -33,9 +34,14 @@ public class RobotContainer {
     private final int strafeAxis = XboxController.Axis.kLeftX.value;
     private final int rotationAxis = XboxController.Axis.kRightX.value;
 
-    /* Driver Buttons */
-    private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
+    /* Driver Buttons */  
+    private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
     private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+
+    private final JoystickButton DynamicForward = new JoystickButton(driver, XboxController.Button.kA.value);
+    private final JoystickButton DynamicReverse = new JoystickButton(driver, XboxController.Button.kB.value);
+    private final JoystickButton QuasistaticForward = new JoystickButton(driver, XboxController.Button.kX.value);
+    private final JoystickButton QuasistaticReverse = new JoystickButton(driver, XboxController.Button.kY.value);
 
     /* Operator Buttons */
     private final POVButton elevatorStage0 = new POVButton(operator, 180);
@@ -113,6 +119,11 @@ public class RobotContainer {
     private void configureButtonBindings() {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroHeading()));
+
+        // DynamicForward.onTrue(e_Elevator.sysIdDynamic(SysIdRoutine.Direction.kForward));
+        // DynamicReverse.onTrue(e_Elevator.sysIdDynamic(SysIdRoutine.Direction.kReverse));
+        // QuasistaticForward.onTrue(e_Elevator.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
+        // QuasistaticReverse.onTrue(e_Elevator.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
 
         /* Operator Buttons */
         elevatorStage0.onTrue(new InstantCommand(() -> e_Elevator.moveToHeight(ElevatorConstants.kReefStage1)));
