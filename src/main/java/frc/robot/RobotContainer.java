@@ -130,7 +130,7 @@ public class RobotContainer {
         elevatorStage1.onTrue(new InstantCommand(() -> e_Elevator.moveToHeight(ElevatorConstants.kReefStage2)));
         elevatorStage2.onTrue(new InstantCommand(() -> e_Elevator.moveToHeight(ElevatorConstants.kReefStage3)));
         elevatorStage3.onTrue(new InstantCommand(() -> e_Elevator.moveToHeight(ElevatorConstants.kReefStage4))); 
-        elevatorStage0.and(elevatorStage1).and(elevatorStage2).and(elevatorStage3).onFalse(new InstantCommand(() -> e_Elevator.setLiftSpeed(0.0)));
+        // elevatorStage0.and(elevatorStage1).and(elevatorStage2).and(elevatorStage3).onFalse(new InstantCommand(() -> e_Elevator.setLiftSpeed(0.0)));
         // elevatorStage0.and(elevatorStage1).and(elevatorStage2).and(elevatorStage3).onFalse(new InstantCommand(() -> e_Elevator.holdHeight()));
     
         closeGripper.onTrue(new InstantCommand(() -> h_Holder.setGripperPosition(2)));

@@ -2,13 +2,16 @@ package frc.robot.subsystems;
 
 import java.util.function.DoubleSupplier;
 
+import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
+import com.ctre.phoenix6.controls.StrictFollower;
 import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
+import com.ctre.phoenix6.signals.ReverseLimitValue;
 
 import edu.wpi.first.units.measure.MutAngle;
 import edu.wpi.first.units.measure.MutAngularVelocity;
@@ -42,6 +45,8 @@ public class ElevatorSubsystem extends SubsystemBase {
     // private Encoder rightElevatorEncoder = new Encoder(ElevatorConstants.kRightElevatorEncoder[0], ElevatorConstants.kRightElevatorEncoder[1]);
 
     public static DoubleSupplier liftSpeed = () -> ElevatorConstants.kElevatorSpeed.get(0.0);
+
+    private String ReverseLimitSwitch = "";
 
     DutyCycleOut m_request = new DutyCycleOut(0);
     MotionMagicVoltage m_motmag = new MotionMagicVoltage(0);
@@ -92,25 +97,28 @@ public class ElevatorSubsystem extends SubsystemBase {
                   this));
     
         public ElevatorSubsystem(){
+            m_motmag.Slot = 0;
             TalonFXConfiguration config = new TalonFXConfiguration();
             config.MotorOutput.NeutralMode = NeutralModeValue.Brake;
             config.HardwareLimitSwitch.ReverseLimitAutosetPositionEnable = true;
             config.HardwareLimitSwitch.ReverseLimitAutosetPositionValue = 0;
             var slotConfigs = config.Slot0;
     
-            slotConfigs.kG = 0.38;
-            slotConfigs.kS = 1.4064;
-            slotConfigs.kV = 1.3225;
-            slotConfigs.kA = 0.072712;
-            slotConfigs.kP = 3.85056;
+            slotConfigs.kG = 0.275;
+            slotConfigs.kS = 0.22;
+
+            slotConfigs.kV = 1.2225;
+            slotConfigs.kA = 0.112712;
+
+            slotConfigs.kP = 6.85056;
             slotConfigs.kI = 0.0;
-            slotConfigs.kD = 0.05;
-    
+            slotConfigs.kD = 0.0;
+
             config.Slot0 = slotConfigs;
     
             var motionMagicConfigs = config.MotionMagic;
-            motionMagicConfigs.MotionMagicCruiseVelocity = 15;
-            motionMagicConfigs.MotionMagicAcceleration = 25;
+            motionMagicConfigs.MotionMagicCruiseVelocity = 50;
+            motionMagicConfigs.MotionMagicAcceleration = 100;
             motionMagicConfigs.MotionMagicJerk = 160;
     
             config.MotionMagic = motionMagicConfigs;
@@ -122,6 +130,8 @@ public class ElevatorSubsystem extends SubsystemBase {
             config.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
             RightElevatorMotor.getConfigurator().apply(config);
             RightElevatorMotor.getConfigurator().setPosition(0);
+
+            LeftElevatorMotor.setControl(new StrictFollower(RightElevatorMotor.getDeviceID()));
             // System.out.println(config.toString());
             // System.out.println(LeftElevatorMotor.getConfigurator().equals(config));
             // System.out.println(RightElevatorMotor.getConfigurator().equals(config));
@@ -129,7 +139,7 @@ public class ElevatorSubsystem extends SubsystemBase {
         }
         
         public void setLiftSpeed(double speed){
-            LeftElevatorMotor.setControl(m_request.withOutput(speed));
+            // LeftElevatorMotor.setControl(m_request.withOutput(speed));
             RightElevatorMotor.setControl(m_request.withOutput(speed));
         }
         
@@ -180,12 +190,12 @@ public class ElevatorSubsystem extends SubsystemBase {
         }
         
         public void moveToHeight(double desiredHeight){
-            LeftElevatorMotor.setControl(m_motmag.withPosition(heightToRotations(desiredHeight-19.5)));
+            // LeftElevatorMotor.setControl(m_motmag.withPosition(heightToRotations(desiredHeight-19.5)));
             RightElevatorMotor.setControl(m_motmag.withPosition(heightToRotations(desiredHeight-19.5)));
         }
     
         public void holdHeight(){
-            LeftElevatorMotor.setControl(m_motmag.withPosition(LeftElevatorMotor.getPosition().getValueAsDouble()));
+            // LeftElevatorMotor.setControl(m_motmag.withPosition(LeftElevatorMotor.getPosition().getValueAsDouble()));
             RightElevatorMotor.setControl(m_motmag.withPosition(RightElevatorMotor.getPosition().getValueAsDouble()));
         }
         
@@ -194,17 +204,28 @@ public class ElevatorSubsystem extends SubsystemBase {
             double motorRotations = 10 * rOutput;
             return motorRotations;
         }
+
+        public double rotationsToHeight(double pos){
+            double npos = pos/10;
+            double height = npos * ElevatorConstants.kHeightOutput;
+            return height + 19.5;
+        }
         
         @Override
         public void periodic() {
-            m_motmag.Slot = 0;
             // SmartDashboard.putNumber("Encoder Left Value:", getEncoderValue());
             // SmartDashboard.putNumber("Encoder Right Value:", getEncoderValue1());
             // SmartDashboard.putNumber("Encoder difference:", getEncoderValue() - getEncoderValue1());
-            SmartDashboard.putNumber("Motor Position 1:", LeftElevatorMotor.getRotorPosition().getValueAsDouble());
-            SmartDashboard.putNumber("Motor Position 2:", RightElevatorMotor.getRotorPosition().getValueAsDouble());
+            SmartDashboard.putNumber("Motor Position 1:", rotationsToHeight(LeftElevatorMotor.getRotorPosition().getValueAsDouble()));
+            SmartDashboard.putNumber("Motor Position 2:", rotationsToHeight(RightElevatorMotor.getRotorPosition().getValueAsDouble()));
             SmartDashboard.putNumber("elevator running 1", LeftElevatorMotor.getMotionMagicIsRunning().getValueAsDouble());
             SmartDashboard.putNumber("elevator running 2", RightElevatorMotor.getMotionMagicIsRunning().getValueAsDouble());
+            if (LeftElevatorMotor.getReverseLimit().toString().contains("ClosedToGround") || RightElevatorMotor.getReverseLimit().toString().contains("ClosedToGround")){
+                if (ReverseLimitSwitch.contains("Open")){
+                    RightElevatorMotor.setControl(m_request.withOutput(0));
+                }
+            }
+            ReverseLimitSwitch = RightElevatorMotor.getReverseLimit().toString();
         }
     
           /**
