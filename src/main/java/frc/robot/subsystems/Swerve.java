@@ -1,13 +1,17 @@
 package frc.robot.subsystems;
 
+import frc.lib.util.LimelightHelpers;
 import frc.robot.SwerveModule;
 import frc.robot.constants.Constants;
+import frc.robot.subsystems.AutoAlignmentSubsystem.pose;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 
 import java.util.Optional;
+
+import org.littletonrobotics.junction.Logger;
 
 import com.ctre.phoenix6.configs.Pigeon2Configuration;
 import com.ctre.phoenix6.hardware.Pigeon2;
@@ -16,22 +20,39 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
+import com.pathplanner.lib.path.PathConstraints;
+
+import edu.wpi.first.math.VecBuilder;
+import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 public class Swerve extends SubsystemBase {
     public SwerveDriveOdometry swerveOdometry;
     public SwerveModule[] mSwerveMods;
     public Pigeon2 gyro;
 
-    // private final SwerveDrivePoseEstimator m_PoseEstimator;
+    private final SwerveDrivePoseEstimator m_PoseEstimator;
     
     public Swerve() {
+        //positional logging
+        Pose2d poseA = getPose();
+        Pose2d poseB = new Pose2d();    
+
+        Logger.recordOutput("MyPose", poseA);
+        Logger.recordOutput("MyPoseArray", poseA, poseB);
+        Logger.recordOutput("MyPoseArray", new Pose2d[] {poseA, poseB});
+        
+        //gyro initialization
         gyro = new Pigeon2(Constants.Swerve.pigeonID, "Swerve");
         gyro.getConfigurator().apply(new Pigeon2Configuration());
         gyro.reset();
@@ -43,16 +64,20 @@ public class Swerve extends SubsystemBase {
             new SwerveModule(3, Constants.Swerve.Mod3.constants)
         };
 
-        // m_PoseEstimator  = 
-        // new SwerveDrivePoseEstimator(
-        //     Constants.Swerve.swerveKinematics, 
-        //     getGyroYaw(), 
-        //     getModulePositions(), 
-        //     new Pose2d(),
-        //     VecBuilder.fill(0.05, 0.05, Units.degreesToRadians(5)),
-        //     VecBuilder.fill(0.5, 0.5, Units.degreesToRadians(30)));
+        //initialization of position estimation
+        m_PoseEstimator  = 
+        new SwerveDrivePoseEstimator(
+            Constants.Swerve.swerveKinematics, 
+            getGyroYaw(), 
+            getModulePositions(), 
+            new Pose2d(),
+            VecBuilder.fill(0.05, 0.05, Units.degreesToRadians(5)),
+            VecBuilder.fill(0.5, 0.5, Units.degreesToRadians(30)));
         
+        //reserve swerve odometry initialization
         swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getGyroYaw(), getModulePositions());
+
+        //setup of auto builder for pathplanner
         try{
             Constants.AutoConstants.config = RobotConfig.fromGUISettings();
       
@@ -88,51 +113,110 @@ public class Swerve extends SubsystemBase {
     }
 
     public void updateOdometry() {
-        // m_PoseEstimator.update(
-        //     getGyroYaw(), 
-        //     getModulePositions());
+        //update estimated position with swerve odometry 
+        m_PoseEstimator.update(
+            getGyroYaw(), 
+            getModulePositions());
 
-        // boolean doRejectUpdate = false;
+        boolean doRejectUpdate = false;
+        try{
+            if (TrackingSubsystem.left_id != -1){
+                LimelightHelpers.PoseEstimate mt1 = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight-left");
+      
+                if(mt1.tagCount == 1 && mt1.rawFiducials.length == 1)
+                {
+                    if(mt1.rawFiducials[0].ambiguity > .7)
+                    {
+                    doRejectUpdate = true;
+                    }
+                    if(mt1.rawFiducials[0].distToCamera > 3)
+                    {
+                    doRejectUpdate = true;
+                    }
+                }
+                if(mt1.tagCount == 0)
+                {
+                    doRejectUpdate = true;
+                }
 
-        // LimelightHelpers.SetRobotOrientation("limelight", m_PoseEstimator.getEstimatedPosition().getRotation().getDegrees(), 0, 0, 0, 0, 0);
-        // LimelightHelpers.PoseEstimate mt2 = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight");
-        // if(Math.abs(gyro.getAngularVelocityZWorld().getValueAsDouble()) > 720) // if our angular velocity is greater than 720 degrees per second, ignore vision updates
-        // {
-        //     doRejectUpdate = true;
-        // }
-        // if(mt2.tagCount == 0)
-        // {
-        //     doRejectUpdate = true;
-        // }
-        // if(!doRejectUpdate)
-        // {
-        //     m_PoseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(.7,.7,9999999));
-        //     m_PoseEstimator.addVisionMeasurement(
-        //         mt2.pose,
-        //         mt2.timestampSeconds);
-        // }
-    }
+                if(!doRejectUpdate)
+                {
+                    m_PoseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(.5,.5,9999999));
+                    m_PoseEstimator.addVisionMeasurement(
+                        mt1.pose,
+                        mt1.timestampSeconds);
+                }
 
 
-    public Optional<Rotation2d> getRotationTargetOverride(){
-        // Some condition that should decide if we want to override rotation
-        if(ObjectTrackingSubsystem.hasObject()) {
-            // Return an optional containing the rotation override (this should be a field relative rotation)
-            return Optional.of(Rotation2d.fromDegrees(ObjectTrackingSubsystem.getRotation(0)));
-        } else {
-            // return an empty optional when we don't want to override the path's rotation
-            return Optional.empty();
+
+                // LimelightHelpers.SetRobotOrientation("limelight-left", m_PoseEstimator.getEstimatedPosition().getRotation().getDegrees(), 0, 0, 0, 0, 0);
+                // LimelightHelpers.PoseEstimate mt = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight-left");
+                // if(Math.abs(gyro.getAngularVelocityZWorld().getValueAsDouble()) > 720) // if our angular velocity is greater than 720 degrees per second, ignore vision updates
+                // {
+                //     doRejectUpdate = true;
+                // }
+                // if(mt.tagCount == 0)
+                // {
+                //     doRejectUpdate = true;
+                // }
+                // if(!doRejectUpdate)
+                // {
+                //     m_PoseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(.7,.7,9999999));
+                //     m_PoseEstimator.addVisionMeasurement(
+                //         mt.pose,
+                //         mt.timestampSeconds);
+                // }
+            }
+
+            if (TrackingSubsystem.right_id != -1){
+                LimelightHelpers.PoseEstimate mt1 = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight-right");
+      
+                if(mt1.tagCount == 1 && mt1.rawFiducials.length == 1)
+                {
+                    if(mt1.rawFiducials[0].ambiguity > .7)
+                    {
+                    doRejectUpdate = true;
+                    }
+                    if(mt1.rawFiducials[0].distToCamera > 3)
+                    {
+                    doRejectUpdate = true;
+                    }
+                }
+                if(mt1.tagCount == 0)
+                {
+                    doRejectUpdate = true;
+                }
+
+                if(!doRejectUpdate)
+                {
+                    m_PoseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(.5,.5,9999999));
+                    m_PoseEstimator.addVisionMeasurement(
+                        mt1.pose,
+                        mt1.timestampSeconds);
+                }
+
+                // LimelightHelpers.SetRobotOrientation("limelight-right", m_PoseEstimator.getEstimatedPosition().getRotation().getDegrees(), 0, 0, 0, 0, 0);
+                // LimelightHelpers.PoseEstimate mt = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight-right");
+                // if(Math.abs(gyro.getAngularVelocityZWorld().getValueAsDouble()) > 720) // if our angular velocity is greater than 720 degrees per second, ignore vision updates
+                // {
+                //     doRejectUpdate = true;
+                // }
+                // if(mt.tagCount == 0)
+                // {
+                //     doRejectUpdate = true;
+                // }
+                // if(!doRejectUpdate)
+                // {
+                //     m_PoseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(.7,.7,9999999));
+                //     m_PoseEstimator.addVisionMeasurement(
+                //         mt.pose,
+                //         mt.timestampSeconds);
+                // } 
+            }
+        } catch(NullPointerException e){
+
         }
     }
-
-    public void test(){
-        PPHolonomicDriveController.overrideRotationFeedback(() -> {
-            // Calculate feedback from your custom PID controller
-            return 0.0;
-        });
-        PPHolonomicDriveController.clearRotationFeedbackOverride();
-    }
-
 
     public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
         SwerveModuleState[] swerveModuleStates =
@@ -181,15 +265,21 @@ public class Swerve extends SubsystemBase {
     }
 
     public Pose2d getPose() {
-        // try{
-            // return m_PoseEstimator.getEstimatedPosition();
-        // }catch(NullPointerException n){
-            return swerveOdometry.getPoseMeters();
-        // }
+        try{
+            return m_PoseEstimator.getEstimatedPosition();
+        }catch(NullPointerException n){
+            try {
+                System.out.println("base swerve odometry");
+                return swerveOdometry.getPoseMeters();
+            } catch(NullPointerException s){
+                System.out.println("Default Pose");    
+                return new Pose2d(3.213, 4.025, new Rotation2d(-90));
+            }
+        }
     }
 
     public void setPose(Pose2d pose) {
-        // m_PoseEstimator.resetPosition(getGyroYaw(), getModulePositions(), pose);
+        m_PoseEstimator.resetPosition(getGyroYaw(), getModulePositions(), pose);
         swerveOdometry.resetPosition(getGyroYaw(), getModulePositions(), pose);
     }
 
@@ -199,12 +289,12 @@ public class Swerve extends SubsystemBase {
 
     public void setHeading(Rotation2d heading){
         swerveOdometry.resetPosition(getGyroYaw(), getModulePositions(), new Pose2d(getPose().getTranslation(), heading));
-        // m_PoseEstimator.resetPosition(getGyroYaw(), getModulePositions(), new Pose2d(getPose().getTranslation(), heading));
+        m_PoseEstimator.resetPosition(getGyroYaw(), getModulePositions(), new Pose2d(getPose().getTranslation(), heading));
     }
 
     public void zeroHeading(){
         swerveOdometry.resetPosition(getGyroYaw(), getModulePositions(), new Pose2d(getPose().getTranslation(), new Rotation2d()));
-        // m_PoseEstimator.resetPosition(getGyroYaw(), getModulePositions(), new Pose2d(getPose().getTranslation(), new Rotation2d()));
+        m_PoseEstimator.resetPosition(getGyroYaw(), getModulePositions(), new Pose2d(getPose().getTranslation(), new Rotation2d()));
     }
 
     public Rotation2d getGyroYaw() {
@@ -226,6 +316,31 @@ public class Swerve extends SubsystemBase {
         SwerveDriveKinematics.desaturateWheelSpeeds(states, Constants.Swerve.maxSpeed);
         setModuleStates(states);
     }
+
+    Pose2d targetPose = new Pose2d();
+    public Command driveToPose(TrackingSubsystem t_Tracking, AutoAlignmentSubsystem a_Alignment, int offsetDirection){
+        Command setDesiredPose = this.run(
+            () -> targetPose = a_Alignment.basePose(t_Tracking.validId, t_Tracking.isLeft, offsetDirection, getPose())
+        );
+        WaitCommand wait = new WaitCommand(0.1);
+        //obtain base position to move to before offsets
+        // Pose2d targetPose = a_Alignment.basePose(t_Tracking.validId, t_Tracking.isLeft, offsetDirection, getPose());
+        // System.out.println("Desired Pose: " + a_Alignment.basePose(t_Tracking.validId, t_Tracking.isLeft, offsetDirection, getPose()));
+        // Pose2d targetPose = new Pose2d(3, 4, new Rotation2d(-90));
+        PathConstraints constraints = new PathConstraints(
+        3.0, 4.0,
+        Units.degreesToRadians(540), Units.degreesToRadians(720));
+
+        // Since AutoBuilder is configured, we can use it to build pathfinding commands
+        Command pathfindingCommand = AutoBuilder.pathfindToPose(
+            targetPose,
+            constraints,
+            0.0// Goal end velocity in meters/sec
+        );
+        // System.out.println("Returning pathfinding");
+        return (setDesiredPose.raceWith(wait)).andThen(pathfindingCommand);
+    }
+
 
     @Override
     public void periodic(){

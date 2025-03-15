@@ -28,15 +28,15 @@ public class ObjectTrackingSubsystem extends SubsystemBase {
         }
         @Override
         public void periodic() {
-            x = tx.getDouble(0.0);
-            id = tid.getDouble(0.0);
-            y = ty.getDouble(0.0);
-            area = ta.getDouble(0.0);
-            SmartDashboard.putNumber("intake-distance", getDistance());
-            SmartDashboard.putNumber("intake-limelightx", x);
-            SmartDashboard.putNumber("intake-limelighty", y);
-            SmartDashboard.putNumber("intake-limelighta", area);
-            SmartDashboard.putNumber("intake-limelightid", id);
+            // x = tx.getDouble(0.0);
+            // id = tid.getDouble(0.0);
+            // y = ty.getDouble(0.0);
+            // area = ta.getDouble(0.0);
+            // SmartDashboard.putNumber("intake-distance", getDistance());
+            // SmartDashboard.putNumber("intake-limelightx", x);
+            // SmartDashboard.putNumber("intake-limelighty", y);
+            // SmartDashboard.putNumber("intake-limelighta", area);
+            // SmartDashboard.putNumber("intake-limelightid", id);
         }
         
         public Command AimAtSpeaker(Swerve s_Swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup, BooleanSupplier robotCentricSup) {

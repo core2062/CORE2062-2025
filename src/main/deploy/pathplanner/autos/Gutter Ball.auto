@@ -11,9 +11,41 @@
           }
         },
         {
-          "type": "named",
+          "type": "race",
           "data": {
-            "name": "Pause Movement"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Pause Movement"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 0.5
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Reef Stage 3"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 2.0
+                }
+              }
+            ]
           }
         },
         {
@@ -33,6 +65,12 @@
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Reef Stage 1"
           }
         },
         {

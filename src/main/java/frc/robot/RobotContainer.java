@@ -35,13 +35,11 @@ public class RobotContainer {
     private final int rotationAxis = XboxController.Axis.kRightX.value;
 
     /* Driver Buttons */  
-    private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
-    private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+    private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
+    private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kA.value);
 
-    private final JoystickButton DynamicForward = new JoystickButton(driver, XboxController.Button.kA.value);
-    private final JoystickButton DynamicReverse = new JoystickButton(driver, XboxController.Button.kB.value);
-    private final JoystickButton QuasistaticForward = new JoystickButton(driver, XboxController.Button.kX.value);
-    private final JoystickButton QuasistaticReverse = new JoystickButton(driver, XboxController.Button.kY.value);
+    private final JoystickButton offsetLeft = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+    private final JoystickButton offsetRight = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
 
     /* Operator Buttons */
     private final POVButton elevatorStage0 = new POVButton(operator, 180);
@@ -62,7 +60,8 @@ public class RobotContainer {
     private final Swerve s_Swerve = new Swerve();
     private final HolderSubsystem h_Holder = new HolderSubsystem();
     private final ElevatorSubsystem e_Elevator = new ElevatorSubsystem();
-    private final SwerveTrackingSubsystem st_SwerveTrackSubsystem = new SwerveTrackingSubsystem();
+    private final TrackingSubsystem t_Tracking = new TrackingSubsystem();
+    private final AutoAlignmentSubsystem a_Alignment = new AutoAlignmentSubsystem();
 
     /* double Suppliers */
 
@@ -98,16 +97,13 @@ public class RobotContainer {
     private void registerCommands(){
         NamedCommands.registerCommand("Pause Movement", new TeleopSwerve(s_Swerve, () -> 0, () -> 0, () -> 0, () -> false));
         
-        NamedCommands.registerCommand("Reef Stage 1", new ElevatorMovementCommand(e_Elevator, 1));
-        NamedCommands.registerCommand("Reef Stage 2", new ElevatorMovementCommand(e_Elevator, 2));
-        NamedCommands.registerCommand("Reef Stage 3", new ElevatorMovementCommand(e_Elevator, 3));
-        NamedCommands.registerCommand("Reef Stage 4", new ElevatorMovementCommand(e_Elevator, 4));
+        NamedCommands.registerCommand("Reef Stage 1", new InstantCommand(() -> e_Elevator.moveToHeight(ElevatorConstants.kReefStage1)));
+        NamedCommands.registerCommand("Reef Stage 2", new InstantCommand(() -> e_Elevator.moveToHeight(ElevatorConstants.kReefStage2)));
+        NamedCommands.registerCommand("Reef Stage 3", new InstantCommand(() -> e_Elevator.moveToHeight(ElevatorConstants.kReefStage3)));
+        NamedCommands.registerCommand("Reef Stage 4", new InstantCommand(() -> e_Elevator.moveToHeight(ElevatorConstants.kReefStage4)));
 
-        NamedCommands.registerCommand("Run Feed Left", new ReleaseGripperFeedCommand(h_Holder, -0.8));
-        NamedCommands.registerCommand("Run Feed Right", new ReleaseGripperFeedCommand(h_Holder, 0.8));
-        
-        NamedCommands.registerCommand("Open Gripper", new InstantCommand(() -> h_Holder.setGripperPosition(1)));
-        NamedCommands.registerCommand("Close Gripper", new InstantCommand(() -> h_Holder.setGripperPosition(2)));
+        NamedCommands.registerCommand("Run Feed Left", new ReleaseGripperFeedCommand(h_Holder, 0.8));
+        NamedCommands.registerCommand("Run Feed Right", new ReleaseGripperFeedCommand(h_Holder, -0.8));
     }
 
     /**
@@ -120,10 +116,8 @@ public class RobotContainer {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroHeading()));
 
-        // DynamicForward.onTrue(e_Elevator.sysIdDynamic(SysIdRoutine.Direction.kForward));
-        // DynamicReverse.onTrue(e_Elevator.sysIdDynamic(SysIdRoutine.Direction.kReverse));
-        // QuasistaticForward.onTrue(e_Elevator.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
-        // QuasistaticReverse.onTrue(e_Elevator.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
+        // offsetLeft.whileTrue(s_Swerve.driveToPose(t_Tracking, a_Alignment, 1));
+        // offsetRight.whileTrue(s_Swerve.driveToPose(t_Tracking, a_Alignment, 2));
 
         /* Operator Buttons */
         elevatorStage0.onTrue(new InstantCommand(() -> e_Elevator.moveToHeight(ElevatorConstants.kReefStage1)));

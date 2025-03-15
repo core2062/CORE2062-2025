@@ -46,11 +46,11 @@ public class HolderSubsystem extends SubsystemBase{
      */
     public void setGripperPosition(int servoAngle){
         if (servoAngle == 1){
-            m_Channel2.setPulseWidth(HolderConstants.kServoOpen.get(1500));
-            m_Channel1.setPulseWidth(HolderConstants.kServoOpen.get(1500));
+            m_Channel2.setPulseWidth(HolderConstants.kServoOpen.get(500));
+            m_Channel1.setPulseWidth(HolderConstants.kServoOpen.get(500));
         } else if (servoAngle == 2){
-            m_Channel2.setPulseWidth(HolderConstants.kServoClosed.get(1500));
-            m_Channel1.setPulseWidth(HolderConstants.kServoClosed.get(1500));
+            m_Channel2.setPulseWidth(HolderConstants.kServoClosed.get(1900));
+            m_Channel1.setPulseWidth(HolderConstants.kServoClosed.get(1900));
         }
     }
 
@@ -66,18 +66,18 @@ public class HolderSubsystem extends SubsystemBase{
     
     @Override
     public void periodic() {
-        if (m_Channel1.getPulseWidth() > 2000){
+        if (m_Channel1.getPulseWidth() > 1100){
             gripperClosed = true;
         } else if (m_Channel1.getPulseWidth() < 1100){
             gripperClosed = false;
         }
 
-        if (getPhotoeyeTriggered() && m_Channel1.getPulseWidth() < 2000 && autoGripperClosed == false){
-            if (closeDelay.hasElapsed(0.6) || closeDelay.get() == 0){
+        if (getPhotoeyeTriggered() && m_Channel1.getPulseWidth() < 1100 && autoGripperClosed == false){
+            if (closeDelay.hasElapsed(0.3) || closeDelay.get() == 0){
                 closeDelay.reset();
                 closeDelay.start();
             }
-            if (closeDelay.hasElapsed(0.5)) {
+            if (closeDelay.hasElapsed(0.25)) {
                 setGripperPosition(2);
                 autoGripperClosed = true;
             }

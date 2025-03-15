@@ -3,32 +3,37 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.037102272727275,
-        "y": 6.313480113636364
+        "x": 3.213,
+        "y": 4.025
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.651051136363637,
-        "y": 6.353366477272727
+        "x": 2.963,
+        "y": 4.024999999999998
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.098932793087917,
-        "y": 5.0242135456658055
+        "x": 5.767,
+        "y": 4.025
       },
       "prevControl": {
-        "x": 5.587540747633372,
-        "y": 5.61253740930217
+        "x": 6.046794618884836,
+        "y": 4.048998120750012
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Shark Bait Path Point 1"
+      "linkedName": "test"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.5,
+      "rotationDegrees": -29.999999999999996
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
@@ -42,13 +47,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -31.678915063092045
+    "rotation": -90.0
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -90.21384994271396
+    "rotation": -150.0
   },
   "useDefaultConstraints": true
 }

@@ -207,9 +207,9 @@ public final class Constants {
         /* height from floor to heighest point on each reef rung */
         /* height command removes height from floor to base of scoring mechanism */
         public static final double kReefStage1 = 3.0;
-        public static final double kReefStage2 = 29.375;
-        public static final double kReefStage3 = 45.625;
-        public static final double kReefStage4 = 76.15;
+        public static final double kReefStage2 = 29.775;
+        public static final double kReefStage3 = 45.325;
+        public static final double kReefStage4 = 74.15;
 
 
         public static ElevatorConfigs motorConfigs = new ElevatorConfigs();
@@ -219,6 +219,6 @@ public final class Constants {
 
         public static COREConstants kElevatorSpeed = new COREConstants("Elevator Lift Speed", 0.8);
         public static COREConstants kFeedSpeed = new COREConstants("Elevator Feed Speed", -0.5);
-        public static double kHeightOutput = 13.25;
+        public static double kHeightOutput = 12.75;
     }
 }

@@ -6,6 +6,8 @@ package frc.robot;
 
 import java.util.Optional;
 
+import edu.wpi.first.util.datalog.StringLogEntry;
+import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.PowerDistribution;
@@ -75,6 +77,7 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+    
     // StringLogEntry stringLog;
     // DataLogManager.start();
     // DriverStation.startDataLog(DataLogManager.getLog());
