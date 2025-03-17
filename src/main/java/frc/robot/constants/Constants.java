@@ -44,6 +44,12 @@ public final class Constants {
         public static final int[] kArmEncoder = {4,5};
 
     }
+    public static class AlgaeConstants{
+        //public static final int kAlgaeIntakeMotorPort = 13;
+        public static final int kLeftAlgaeMotorPort = 13;
+        public static final int kRightAlgaeMotorPort = 14;
+        public static final int kAlgaePivotMotorPort = 15;
+    }
     public static final class Swerve {
         public static final int pigeonID = 0;
 
