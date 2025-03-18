@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.Constants.HolderConstants;
 
@@ -46,11 +47,11 @@ public class HolderSubsystem extends SubsystemBase{
      */
     public void setGripperPosition(int servoAngle){
         if (servoAngle == 1){
-            m_Channel2.setPulseWidth(HolderConstants.kServoOpen.get(500));
-            m_Channel1.setPulseWidth(HolderConstants.kServoOpen.get(500));
+            m_Channel2.setPulseWidth(HolderConstants.kServoOpen.get(1600));
+            m_Channel1.setPulseWidth(HolderConstants.kServoOpen.get(1600));
         } else if (servoAngle == 2){
-            m_Channel2.setPulseWidth(HolderConstants.kServoClosed.get(1900));
-            m_Channel1.setPulseWidth(HolderConstants.kServoClosed.get(1900));
+            m_Channel2.setPulseWidth(HolderConstants.kServoClosed.get(2600));
+            m_Channel1.setPulseWidth(HolderConstants.kServoClosed.get(2600));
         }
     }
 
@@ -66,13 +67,13 @@ public class HolderSubsystem extends SubsystemBase{
     
     @Override
     public void periodic() {
-        if (m_Channel1.getPulseWidth() > 1100){
+        if (m_Channel1.getPulseWidth() > 1500){
             gripperClosed = true;
-        } else if (m_Channel1.getPulseWidth() < 1100){
+        } else if (m_Channel1.getPulseWidth() < 1500){
             gripperClosed = false;
         }
 
-        if (getPhotoeyeTriggered() && m_Channel1.getPulseWidth() < 1100 && autoGripperClosed == false){
+        if (getPhotoeyeTriggered() && m_Channel1.getPulseWidth() < 1500 && autoGripperClosed == false){
             if (closeDelay.hasElapsed(0.3) || closeDelay.get() == 0){
                 closeDelay.reset();
                 closeDelay.start();
@@ -86,6 +87,8 @@ public class HolderSubsystem extends SubsystemBase{
             closeDelay.reset();
             autoGripperClosed = false;
         }
+        SmartDashboard.putNumber("Servo 1 Pose:", m_Channel1.getPulseWidth());
+        SmartDashboard.putNumber("Servo 2 Pose:", m_Channel2.getPulseWidth());
     }
 
     public void runBelt(double speed){

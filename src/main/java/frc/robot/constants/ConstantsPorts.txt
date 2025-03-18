@@ -11,16 +11,9 @@
 Elevator Ports:
    left lift motor: 8
    right lift motor: 9
-   encoder: [0,1]
-   encoder: [2,3]
-   limit switch1: 7
-   limit switch1: 8
-
-Arm Ports:
-   rotation motor: 10
-   encoder: [4,5]
 
 Holder Ports:
-   gripper servo: 11
+   gripper servo: channel 1
+   gripper servo: channel 2
    belt motor: 12
    photoeye: 6
