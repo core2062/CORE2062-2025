@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+import frc.lib.util.COREConstants;
 import frc.lib.util.Logitech;
 import frc.robot.commands.*;
 import frc.robot.constants.Constants;
@@ -41,6 +42,10 @@ public class RobotContainer {
     // private final JoystickButton offsetLeft = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
     // private final JoystickButton offsetRight = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
 
+    /* Operator Controls */
+    private final COREConstants pivotSpeed = Constants.AlgaeConstants.kHoldSpeed;
+
+
     /* Operator Buttons */
     private final POVButton elevatorStage0 = new POVButton(operator, 180);
     private final POVButton elevatorStage1 = new POVButton(operator, 270);
@@ -54,14 +59,19 @@ public class RobotContainer {
     
     private final JoystickButton elevatorUp = new JoystickButton(operator, Logitech.Button.kA.value);
     private final JoystickButton elevatorDown = new JoystickButton(operator, Logitech.Button.kB.value);
-    
-    private final JoystickButton commandGripper = new JoystickButton(operator, Logitech.Button.kA.value);
+
+    private final JoystickButton algaeIntake = new JoystickButton(operator, Logitech.Button.kLeftTrigger.value);
+    private final JoystickButton algaeOutake = new JoystickButton(operator, Logitech.Button.kRightTrigger.value);    
+    private final JoystickButton algaePivotRight = new JoystickButton(operator, Logitech.Button.kBack.value);    
+    private final JoystickButton algaePivotLeft = new JoystickButton(operator, Logitech.Button.kStart.value);    
+
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
     private final HolderSubsystem h_Holder = new HolderSubsystem();
     private final ElevatorSubsystem e_Elevator = new ElevatorSubsystem();
     private final TrackingSubsystem t_Tracking = new TrackingSubsystem();
     private final AutoAlignmentSubsystem a_Alignment = new AutoAlignmentSubsystem();
+    private final AlgaeSubsystem al_Algae = new AlgaeSubsystem();
 
     /* double Suppliers */
 
@@ -136,6 +146,17 @@ public class RobotContainer {
                   .onFalse(new InstantCommand(() -> e_Elevator.setLiftSpeed(-0.00)));
         elevatorDown.onTrue(new InstantCommand(() -> e_Elevator.setLiftSpeed(-Constants.ElevatorConstants.kElevatorSpeed.get(0.0))))
                     .onFalse(new InstantCommand(() -> e_Elevator.setLiftSpeed(-0.00)));
+
+        algaeIntake.onTrue(new InstantCommand(() -> al_Algae.setAlgaeMotorSpeed(0.6)))
+                   .onFalse(new InstantCommand(() -> al_Algae.setAlgaeMotorSpeed(0.0)));
+
+        algaeOutake.onTrue(new InstantCommand(() -> al_Algae.setAlgaeMotorSpeed(-0.6)))
+                   .onFalse(new InstantCommand(() -> al_Algae.setAlgaeMotorSpeed(0.0)));
+        
+        algaePivotLeft.onTrue(new InstantCommand(() -> al_Algae.setAlgaePivotMotorSpeed(0.4)))
+                      .onFalse(new InstantCommand(() -> al_Algae.setAlgaePivotMotorSpeed(pivotSpeed)));
+        algaePivotRight.onTrue(new InstantCommand(() -> al_Algae.setAlgaePivotMotorSpeed(-0.4)))
+                      .onFalse(new InstantCommand(() -> al_Algae.setAlgaePivotMotorSpeed(pivotSpeed)));
     }
 
     /**

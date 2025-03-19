@@ -63,11 +63,11 @@ public class ElevatorSubsystem extends SubsystemBase {
             RightElevatorMotor.getConfigurator().apply(config);
             RightElevatorMotor.getConfigurator().setPosition(0);
 
-            LeftElevatorMotor.setControl(new StrictFollower(RightElevatorMotor.getDeviceID()));
+            RightElevatorMotor.setControl(new StrictFollower(LeftElevatorMotor.getDeviceID()));
         }
         
         public void setLiftSpeed(double speed){
-            RightElevatorMotor.setControl(m_request.withOutput(speed));
+            LeftElevatorMotor.setControl(m_request.withOutput(speed));
         }
         
         public Command elevatorLift(int coralPos){
@@ -77,11 +77,11 @@ public class ElevatorSubsystem extends SubsystemBase {
         
         public void moveToHeight(double desiredHeight){
             desiredPos = desiredHeight;
-            RightElevatorMotor.setControl(m_motmag.withPosition(heightToRotations(desiredHeight)));
+            LeftElevatorMotor.setControl(m_motmag.withPosition(heightToRotations(desiredHeight)));
         }
     
         public void holdHeight(){
-            RightElevatorMotor.setControl(m_motmag.withPosition(RightElevatorMotor.getPosition().getValueAsDouble()));
+            LeftElevatorMotor.setControl(m_motmag.withPosition(LeftElevatorMotor.getPosition().getValueAsDouble()));
         }
         
         public double heightToRotations(double height){

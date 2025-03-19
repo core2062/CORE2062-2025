@@ -30,6 +30,14 @@ public final class Constants {
     public static boolean endAssembly1 = false;
     public static boolean AimDone = false;
 
+    public static class AlgaeConstants{
+        public static final int kLeftAlgaeMotorPort = 10;
+        public static final int kRightAlgaeMotorPort = 14;
+        public static final int kAlgaePivotMotorPort = 13;
+
+        public static COREConstants kHoldSpeed = new COREConstants("Holding Speed of pivot motor for algae", 0.02);
+    }
+
     public static class HolderConstants{
         public static final int kGripperPort = 9;
         public static final int kBeltPort = 12;
@@ -207,8 +215,8 @@ public final class Constants {
         /* height from floor to heighest point on each reef rung */
         /* height command removes height from floor to base of scoring mechanism */
         public static final double kReefStage1 = 3.0;
-        public static final double kReefStage2 = 29.775;
-        public static final double kReefStage3 = 45.325;
+        public static final double kReefStage2 = 27.775;
+        public static final double kReefStage3 = 43.325;
         public static final double kReefStage4 = 74.15;
 
 
