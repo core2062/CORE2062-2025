@@ -6,6 +6,8 @@ package frc.robot;
 
 import java.util.Optional;
 
+import com.ctre.phoenix6.SignalLogger;
+
 import edu.wpi.first.util.datalog.StringLogEntry;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -79,8 +81,9 @@ public class Robot extends TimedRobot {
     m_robotContainer = new RobotContainer();
     
     // StringLogEntry stringLog;
-    // DataLogManager.start();
-    // DriverStation.startDataLog(DataLogManager.getLog());
+    SignalLogger.start();
+    DataLogManager.start();
+    DriverStation.startDataLog(DataLogManager.getLog());
     // FollowPathCommand.warmupCommand().schedule();
   }
 
@@ -99,9 +102,9 @@ public class Robot extends TimedRobot {
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
 
-    double current8 = m_pdp.getCurrent(8);
+    double current8 = m_pdp.getCurrent(12);
     SmartDashboard.putNumber("Current Channel 8", current8);
-    double current9 = m_pdp.getCurrent(9);
+    double current9 = m_pdp.getCurrent(18);
     SmartDashboard.putNumber("Current Channel 9", current9);
 
   }

@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.8721656021288133,
-        "y": 2.9138382538641565
+        "x": 3.1709659090909086,
+        "y": 3.920298295454545
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.4676680996355493,
-        "y": 1.909754909083889
+        "x": 2.7664684065976446,
+        "y": 2.9162149506742776
       },
       "isLocked": false,
       "linkedName": "Shark Bait Path Point 1"
@@ -48,7 +48,7 @@
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 150.0
+    "rotation": 90.0
   },
   "useDefaultConstraints": true
 }

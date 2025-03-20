@@ -5,6 +5,12 @@
     "data": {
       "commands": [
         {
+          "type": "named",
+          "data": {
+            "name": "Grip"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "Shark Bait path 1"

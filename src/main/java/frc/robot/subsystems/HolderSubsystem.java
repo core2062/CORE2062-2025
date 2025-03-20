@@ -47,11 +47,11 @@ public class HolderSubsystem extends SubsystemBase{
      */
     public void setGripperPosition(int servoAngle){
         if (servoAngle == 1){
-            m_Channel2.setPulseWidth(HolderConstants.kServoOpen.get(1600));
-            m_Channel1.setPulseWidth(HolderConstants.kServoOpen.get(1600));
+            m_Channel2.setPulseWidth(HolderConstants.kServoOpen.get(1400));
+            m_Channel1.setPulseWidth(HolderConstants.kServoOpen.get(1400));
         } else if (servoAngle == 2){
-            m_Channel2.setPulseWidth(HolderConstants.kServoClosed.get(2600));
-            m_Channel1.setPulseWidth(HolderConstants.kServoClosed.get(2600));
+            m_Channel2.setPulseWidth(HolderConstants.kServoClosed.get(2300));
+            m_Channel1.setPulseWidth(HolderConstants.kServoClosed.get(2300));
         }
     }
 
@@ -67,7 +67,7 @@ public class HolderSubsystem extends SubsystemBase{
     
     @Override
     public void periodic() {
-        if (m_Channel1.getPulseWidth() > 1500){
+        if (m_Channel1.getPulseWidth() > 2200){
             gripperClosed = true;
         } else if (m_Channel1.getPulseWidth() < 1500){
             gripperClosed = false;
@@ -87,6 +87,7 @@ public class HolderSubsystem extends SubsystemBase{
             closeDelay.reset();
             autoGripperClosed = false;
         }
+        SmartDashboard.putNumber("PhotoEye value", photoEye.getValue());
         SmartDashboard.putNumber("Servo 1 Pose:", m_Channel1.getPulseWidth());
         SmartDashboard.putNumber("Servo 2 Pose:", m_Channel2.getPulseWidth());
     }

@@ -5,6 +5,12 @@
     "data": {
       "commands": [
         {
+          "type": "named",
+          "data": {
+            "name": "Grip"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "Gutter Ball path 1"

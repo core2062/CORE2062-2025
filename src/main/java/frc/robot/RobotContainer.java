@@ -114,6 +114,8 @@ public class RobotContainer {
 
         NamedCommands.registerCommand("Run Feed Left", new ReleaseGripperFeedCommand(h_Holder, 0.8));
         NamedCommands.registerCommand("Run Feed Right", new ReleaseGripperFeedCommand(h_Holder, -0.8));
+
+        NamedCommands.registerCommand("Grip", new InstantCommand(() -> h_Holder.setGripperPosition(2)));
     }
 
     /**

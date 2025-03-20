@@ -59,10 +59,10 @@ public class AlgaeSubsystem extends SubsystemBase{
     @Override
     public void periodic() {
         SmartDashboard.putNumber("Pivot Position", getRotation());
-        if(getRotation() < 10){
-            AlgaeConstants.kHoldSpeed.set(0.02);
-        } else if (getRotation() > 10){
+        if(getRotation() < 0.06 || getRotation() > 0.35){
             AlgaeConstants.kHoldSpeed.set(0.0);
+        } else if (getRotation() > 0.06 && getRotation() < 0.35){
+            AlgaeConstants.kHoldSpeed.set(0.02);
         }
     }
 }

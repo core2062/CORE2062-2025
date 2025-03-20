@@ -54,7 +54,7 @@ public final class Constants {
     public static final class Swerve {
         public static final int pigeonID = 0;
 
-        public static COREConstants SpeedMod = new COREConstants("Drive Speed Modifier", 0.65);
+        public static COREConstants SpeedMod = new COREConstants("Drive Speed Modifier", 0.80);
         
         public static final COTSTalonFXSwerveConstants chosenModule =  
         COTSTalonFXSwerveConstants.SDS.MK4i.Falcon500(COTSTalonFXSwerveConstants.SDS.MK4i.driveRatios.L2);
@@ -215,8 +215,8 @@ public final class Constants {
         /* height from floor to heighest point on each reef rung */
         /* height command removes height from floor to base of scoring mechanism */
         public static final double kReefStage1 = 3.0;
-        public static final double kReefStage2 = 27.775;
-        public static final double kReefStage3 = 43.325;
+        public static final double kReefStage2 = 29.775;
+        public static final double kReefStage3 = 45.325;
         public static final double kReefStage4 = 74.15;
 
 

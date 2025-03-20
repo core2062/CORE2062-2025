@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.4009752415852947,
-        "y": 4.883874063377737
+        "x": 3.1410511363636364,
+        "y": 3.9801278409090908
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.7727650143125677,
-        "y": 5.422339972468646
+        "x": 2.5128409090909094,
+        "y": 4.518593749999999
       },
       "isLocked": false,
       "linkedName": "Gutter Ball Path Point 1"
@@ -48,7 +48,7 @@
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 29.38009044594181
+    "rotation": 90.0
   },
   "useDefaultConstraints": true
 }

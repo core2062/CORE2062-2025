@@ -42,15 +42,15 @@ public class ElevatorSubsystem extends SubsystemBase {
             slotConfigs.kV = 1.2225;
             slotConfigs.kA = 0.112712;
 
-            slotConfigs.kP = 6.85056;
+            slotConfigs.kP = 5.85056;
             slotConfigs.kI = 0.0;
             slotConfigs.kD = 0.0;
 
             config.Slot0 = slotConfigs;
     
             var motionMagicConfigs = config.MotionMagic;
-            motionMagicConfigs.MotionMagicCruiseVelocity = 50;
-            motionMagicConfigs.MotionMagicAcceleration = 100;
+            motionMagicConfigs.MotionMagicCruiseVelocity = 70;
+            motionMagicConfigs.MotionMagicAcceleration = 140;
             motionMagicConfigs.MotionMagicJerk = 160;
     
             config.MotionMagic = motionMagicConfigs;
@@ -68,6 +68,7 @@ public class ElevatorSubsystem extends SubsystemBase {
         
         public void setLiftSpeed(double speed){
             LeftElevatorMotor.setControl(m_request.withOutput(speed));
+            RightElevatorMotor.setControl(new StrictFollower(LeftElevatorMotor.getDeviceID()));
         }
         
         public Command elevatorLift(int coralPos){
@@ -78,10 +79,12 @@ public class ElevatorSubsystem extends SubsystemBase {
         public void moveToHeight(double desiredHeight){
             desiredPos = desiredHeight;
             LeftElevatorMotor.setControl(m_motmag.withPosition(heightToRotations(desiredHeight)));
+            RightElevatorMotor.setControl(new StrictFollower(LeftElevatorMotor.getDeviceID()));
         }
     
         public void holdHeight(){
             LeftElevatorMotor.setControl(m_motmag.withPosition(LeftElevatorMotor.getPosition().getValueAsDouble()));
+            RightElevatorMotor.setControl(new StrictFollower(LeftElevatorMotor.getDeviceID()));
         }
         
         public double heightToRotations(double height){
@@ -105,12 +108,12 @@ public class ElevatorSubsystem extends SubsystemBase {
             // SmartDashboard.putNumber("elevator running 2", RightElevatorMotor.getMotionMagicIsRunning().getValueAsDouble());
             if (LeftElevatorMotor.getReverseLimit().toString().contains("ClosedToGround") || RightElevatorMotor.getReverseLimit().toString().contains("ClosedToGround")){
                 if (ReverseLimitSwitch.contains("Open")){
-                    RightElevatorMotor.setControl(m_request.withOutput(0));
+                    LeftElevatorMotor.setControl(m_request.withOutput(0));
                 }
             }
             SmartDashboard.putNumber("desired elevator height", desiredPos);
-            atDesiredPose = (Math.abs(desiredPos - rotationsToHeight(RightElevatorMotor.getPosition().getValueAsDouble())) <= (desiredPos * 0.05)) ? true : false;
+            atDesiredPose = (Math.abs(desiredPos - rotationsToHeight(LeftElevatorMotor.getPosition().getValueAsDouble())) <= (desiredPos * 0.05)) ? true : false;
             SmartDashboard.putBoolean("Desired Pose within range", atDesiredPose);
-            ReverseLimitSwitch = RightElevatorMotor.getReverseLimit().toString();
+            ReverseLimitSwitch = LeftElevatorMotor.getReverseLimit().toString();
         }
 }
