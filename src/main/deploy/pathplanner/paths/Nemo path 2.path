@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.001178474277466,
-        "y": 0.28163608502879
+        "x": 6.102915079941156,
+        "y": 4.059214816733234
       },
       "isLocked": false,
       "linkedName": "Nemo Path Point 1"
     },
     {
       "anchor": {
-        "x": 1.4604465075655348,
-        "y": 0.8198865015965532
+        "x": 6.411732954545455,
+        "y": 4.05
       },
       "prevControl": {
-        "x": 2.8464976439291707,
-        "y": 0.909630819778372
+        "x": 6.161797997025252,
+        "y": 4.044297631248851
       },
       "nextControl": null,
       "isLocked": false,
@@ -47,13 +47,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -124.59228868750992
+    "rotation": -90.0
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -90.89743785090302
+    "rotation": -90.897
   },
   "useDefaultConstraints": true
 }

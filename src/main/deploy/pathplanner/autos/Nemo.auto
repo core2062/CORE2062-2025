@@ -42,13 +42,13 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "Reef Stage 3"
+                  "name": "Reef Stage 1"
                 }
               },
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 2.0
+                  "waitTime": 0.0
                 }
               }
             ]
@@ -77,6 +77,12 @@
           "type": "named",
           "data": {
             "name": "Reef Stage 1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Nemo path 2"
           }
         },
         {

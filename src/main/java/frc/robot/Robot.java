@@ -6,9 +6,15 @@ package frc.robot;
 
 import java.util.Optional;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
 import com.ctre.phoenix6.SignalLogger;
 
 import edu.wpi.first.util.datalog.StringLogEntry;
+import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -37,6 +43,7 @@ public class Robot extends TimedRobot {
 
   private static final String compSpeed = "Comp Motor Speed";
   private static final String demoSpeed = "Demo Motor Speed";
+  private static String selectedPath = "";
 
   private final SendableChooser<String> m_driveSpeedchooser = new SendableChooser<>();
 
@@ -81,7 +88,7 @@ public class Robot extends TimedRobot {
     m_robotContainer = new RobotContainer();
     
     // StringLogEntry stringLog;
-    SignalLogger.start();
+    // SignalLogger.start();
     DataLogManager.start();
     DriverStation.startDataLog(DataLogManager.getLog());
     // FollowPathCommand.warmupCommand().schedule();
@@ -102,10 +109,26 @@ public class Robot extends TimedRobot {
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
 
-    double current8 = m_pdp.getCurrent(12);
-    SmartDashboard.putNumber("Current Channel 8", current8);
-    double current9 = m_pdp.getCurrent(18);
-    SmartDashboard.putNumber("Current Channel 9", current9);
+    // String path = m_robotContainer.getAutonomousCommand().getName();
+    // if (path != selectedPath && path != "InstantCommand"){
+    //   BufferedImage img;
+
+    //   try{
+    //     img = ImageIO.read(new File("C:\\Users\\corel\\Downloads\\CORE Projects\\CORE2062-2025\\src\\main\\deploy\\AutoPathPictures\\" + path + ".png"));
+    //   } catch (IOException e) {
+    //     e.printStackTrace();
+    //     img = null;
+    //   }
+
+    //   SmartDashboard.putData("Auto Path", (Sendable) img);
+    //   selectedPath = m_robotContainer.getAutonomousCommand().getName();
+    // }
+
+
+    // double current8 = m_pdp.getCurrent(12);
+    // SmartDashboard.putNumber("Current Channel 8", current8);
+    // double current9 = m_pdp.getCurrent(18);
+    // SmartDashboard.putNumber("Current Channel 9", current9);
 
   }
 

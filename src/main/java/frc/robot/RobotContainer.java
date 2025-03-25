@@ -96,6 +96,8 @@ public class RobotContainer {
 
         registerCommands();
 
+        h_Holder.setGripperPosition(1300);
+
         autoChooser = AutoBuilder.buildAutoChooser("Do Nothing");
         SmartDashboard.putData("Auton", autoChooser);
     }
@@ -112,8 +114,8 @@ public class RobotContainer {
         NamedCommands.registerCommand("Reef Stage 3", new InstantCommand(() -> e_Elevator.moveToHeight(ElevatorConstants.kReefStage3)));
         NamedCommands.registerCommand("Reef Stage 4", new InstantCommand(() -> e_Elevator.moveToHeight(ElevatorConstants.kReefStage4)));
 
-        NamedCommands.registerCommand("Run Feed Left", new ReleaseGripperFeedCommand(h_Holder, 0.8));
-        NamedCommands.registerCommand("Run Feed Right", new ReleaseGripperFeedCommand(h_Holder, -0.8));
+        NamedCommands.registerCommand("Run Feed Left", new ReleaseGripperFeedCommand(h_Holder, 1));
+        NamedCommands.registerCommand("Run Feed Right", new ReleaseGripperFeedCommand(h_Holder, -1));
 
         NamedCommands.registerCommand("Grip", new InstantCommand(() -> h_Holder.setGripperPosition(2)));
     }
@@ -141,8 +143,8 @@ public class RobotContainer {
     
         closeGripper.onTrue(new InstantCommand(() -> h_Holder.setGripperPosition(2)));
         openGripper.onTrue(new InstantCommand(() -> h_Holder.setGripperPosition(1)));
-        runFeedRight.whileTrue(new ReleaseGripperFeedCommand(h_Holder, -0.8));
-        runFeedLeft.whileTrue(new ReleaseGripperFeedCommand(h_Holder, 0.8));
+        runFeedRight.whileTrue(new ReleaseGripperFeedCommand(h_Holder, -1));
+        runFeedLeft.whileTrue(new ReleaseGripperFeedCommand(h_Holder, 1));
 
         elevatorUp.onTrue(new InstantCommand(() -> e_Elevator.setLiftSpeed(Constants.ElevatorConstants.kElevatorSpeed.get(0.0))))
                   .onFalse(new InstantCommand(() -> e_Elevator.setLiftSpeed(-0.00)));
