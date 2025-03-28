@@ -54,10 +54,10 @@ public final class Constants {
     public static final class Swerve {
         public static final int pigeonID = 0;
 
-        public static COREConstants SpeedMod = new COREConstants("Drive Speed Modifier", 0.80);
+        public static COREConstants SpeedMod = new COREConstants("Drive Speed Modifier", 0.65);
         
         public static final COTSTalonFXSwerveConstants chosenModule =  
-        COTSTalonFXSwerveConstants.SDS.MK4i.Falcon500(COTSTalonFXSwerveConstants.SDS.MK4i.driveRatios.L2);
+        COTSTalonFXSwerveConstants.SDS.MK4i.Falcon500(COTSTalonFXSwerveConstants.SDS.MK4i.driveRatios.L1);
 
         /* Drivetrain Constants */
         public static final double trackWidth = Units.inchesToMeters(24.5); //TODO: This must be tuned to specific robot
@@ -131,7 +131,7 @@ public final class Constants {
             public static final int driveMotorID = 0;
             public static final int angleMotorID = 1;
             public static final int canCoderID = 0;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(0.7);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(2.91);
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
@@ -141,7 +141,7 @@ public final class Constants {
             public static final int driveMotorID = 4;
             public static final int angleMotorID = 5;
             public static final int canCoderID = 2;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(-154.68);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(205.57);
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
@@ -151,7 +151,7 @@ public final class Constants {
             public static final int driveMotorID = 2;
             public static final int angleMotorID = 3;
             public static final int canCoderID = 1;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(85.16);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(83.59);
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
@@ -161,7 +161,7 @@ public final class Constants {
             public static final int driveMotorID = 6;
             public static final int angleMotorID = 7;
             public static final int canCoderID = 3;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(-160.13);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(200.12);
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
@@ -214,9 +214,9 @@ public final class Constants {
 
         /* height from floor to heighest point on each reef rung */
         /* height command removes height from floor to base of scoring mechanism */
-        public static final double kReefStage1 = 3.0;
-        public static final double kReefStage2 = 28.775;
-        public static final double kReefStage3 = 44.325;
+        public static final double kReefStage1 = 19.0;
+        public static final double kReefStage2 = 27.775;
+        public static final double kReefStage3 = 43.325;
         public static final double kReefStage4 = 74.15;
 
 

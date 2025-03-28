@@ -38,6 +38,7 @@ public class RobotContainer {
     /* Driver Buttons */  
     private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
     private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+    private final JoystickButton turtleMode = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
 
     // private final JoystickButton offsetLeft = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
     // private final JoystickButton offsetRight = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
@@ -130,6 +131,8 @@ public class RobotContainer {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroHeading()));
 
+        turtleMode.onTrue(new InstantCommand(() -> Constants.Swerve.SpeedMod.set(0.3)))
+                  .onFalse(new InstantCommand(() -> Constants.Swerve.SpeedMod.set(0.8)));
         // offsetLeft.whileTrue(s_Swerve.driveToPose(t_Tracking, a_Alignment, 1));
         // offsetRight.whileTrue(s_Swerve.driveToPose(t_Tracking, a_Alignment, 2));
 
@@ -154,7 +157,7 @@ public class RobotContainer {
         algaeIntake.onTrue(new InstantCommand(() -> al_Algae.setAlgaeMotorSpeed(0.6)))
                    .onFalse(new InstantCommand(() -> al_Algae.setAlgaeMotorSpeed(0.0)));
 
-        algaeOutake.onTrue(new InstantCommand(() -> al_Algae.setAlgaeMotorSpeed(-0.6)))
+        algaeOutake.onTrue(new InstantCommand(() -> al_Algae.setAlgaeMotorSpeed(-1)))
                    .onFalse(new InstantCommand(() -> al_Algae.setAlgaeMotorSpeed(0.0)));
         
         algaePivotLeft.onTrue(new InstantCommand(() -> al_Algae.setAlgaePivotMotorSpeed(0.4)))

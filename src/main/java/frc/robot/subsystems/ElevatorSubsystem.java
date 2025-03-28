@@ -7,6 +7,7 @@ import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.controls.StrictFollower;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.GravityTypeValue;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -36,22 +37,23 @@ public class ElevatorSubsystem extends SubsystemBase {
             config.HardwareLimitSwitch.ReverseLimitAutosetPositionValue = 0;
             var slotConfigs = config.Slot0;
     
-            slotConfigs.kG = 0.275;
+            slotConfigs.GravityType = GravityTypeValue.Elevator_Static;
+            slotConfigs.kG = 0.175;
             slotConfigs.kS = 0.22;
 
             slotConfigs.kV = 1.2225;
             slotConfigs.kA = 0.112712;
 
-            slotConfigs.kP = 5.85056;
+            slotConfigs.kP = 6.35056;
             slotConfigs.kI = 0.0;
             slotConfigs.kD = 0.0;
 
             config.Slot0 = slotConfigs;
     
             var motionMagicConfigs = config.MotionMagic;
-            motionMagicConfigs.MotionMagicCruiseVelocity = 70;
-            motionMagicConfigs.MotionMagicAcceleration = 140;
-            motionMagicConfigs.MotionMagicJerk = 160;
+            motionMagicConfigs.MotionMagicCruiseVelocity = 80;
+            motionMagicConfigs.MotionMagicAcceleration = 160;
+            motionMagicConfigs.MotionMagicJerk = 200;
     
             config.MotionMagic = motionMagicConfigs;
     

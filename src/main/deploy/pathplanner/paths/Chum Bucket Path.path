@@ -3,37 +3,32 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.528551136363637,
-        "y": 7.271
+        "x": 7.595609670004207,
+        "y": 2.979557055968889
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.876107954545454,
-        "y": 7.320857954545455
+        "x": 6.722906821191649,
+        "y": 3.017438722271004
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.19795156815574,
-        "y": 3.9142701603847625
+        "x": 5.178894088677115,
+        "y": 2.9
       },
       "prevControl": {
-        "x": 2.4607312595084867,
-        "y": 6.85803180949706
+        "x": 6.666218755946713,
+        "y": 2.908045671470916
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Gutter Ball Path Point 1"
+      "linkedName": null
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.6838365896980466,
-      "rotationDegrees": 141.9731860603195
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
@@ -47,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 90.09720496584339
+    "rotation": -151.92751306414712
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": -179.03462340369464
   },
   "useDefaultConstraints": true
 }

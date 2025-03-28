@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.603,
-        "y": 4.05
+        "x": 5.85,
+        "y": 4.1
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.102915079941156,
-        "y": 4.059214816733234
+        "x": 6.349915079941156,
+        "y": 4.109214816733234
       },
       "isLocked": false,
       "linkedName": "Nemo Path Point 1"
@@ -17,11 +17,11 @@
     {
       "anchor": {
         "x": 6.411732954545455,
-        "y": 4.05
+        "y": 4.1
       },
       "prevControl": {
         "x": 6.161797997025252,
-        "y": 4.044297631248851
+        "y": 4.094297631248851
       },
       "nextControl": null,
       "isLocked": false,

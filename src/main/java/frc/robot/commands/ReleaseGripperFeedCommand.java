@@ -7,6 +7,7 @@ import frc.robot.subsystems.HolderSubsystem;
 public class ReleaseGripperFeedCommand extends Command{
     private HolderSubsystem h_holderSubsystem;
     private double speed;
+    private boolean skipDelay = false;
     private Timer timer = new Timer();
 
     public ReleaseGripperFeedCommand(HolderSubsystem s_Subsystem, double speed){
@@ -17,6 +18,9 @@ public class ReleaseGripperFeedCommand extends Command{
 
     @Override
     public void initialize() {
+        if (h_holderSubsystem.gripperClosed == false){
+            skipDelay = true;
+        }
         timer.reset();
         timer.start();
     }
@@ -26,13 +30,14 @@ public class ReleaseGripperFeedCommand extends Command{
         if(h_holderSubsystem.gripperClosed == true){
             h_holderSubsystem.setGripperPosition(1);
         }
-        if(h_holderSubsystem.gripperClosed == false && timer.get() > 0.5){
+        if(h_holderSubsystem.gripperClosed == false && (timer.get() > 0.5 || skipDelay)){
             h_holderSubsystem.runBelt(speed);
         }
     }
     
     @Override
     public void end(boolean interrupted) {
+        skipDelay = false;
         timer.stop();
         h_holderSubsystem.runBelt(0);
     }
