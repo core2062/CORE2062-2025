@@ -1,6 +1,9 @@
 {
   "download": {
-    "localDir": "C:\\Users\\corel\\Downloads\\Logs",
+    "localDir": "C:\\Users\\corel\\Documents\\logs\\mroc",
     "serverTeam": "2062"
+  },
+  "output": {
+    "outputFolder": "C:\\Users\\corel\\Documents\\logs\\mroc"
   }
 }

@@ -114,6 +114,7 @@ public class RobotContainer {
         NamedCommands.registerCommand("Reef Stage 2", new InstantCommand(() -> e_Elevator.moveToHeight(ElevatorConstants.kReefStage2)));
         NamedCommands.registerCommand("Reef Stage 3", new InstantCommand(() -> e_Elevator.moveToHeight(ElevatorConstants.kReefStage3)));
         NamedCommands.registerCommand("Reef Stage 4", new InstantCommand(() -> e_Elevator.moveToHeight(ElevatorConstants.kReefStage4)));
+        NamedCommands.registerCommand("Reef Stage 4 Shift", new InstantCommand(() -> e_Elevator.moveToHeight(ElevatorConstants.kReefStage4TipHeight)));
 
         NamedCommands.registerCommand("Run Feed Left", new ReleaseGripperFeedCommand(h_Holder, 1));
         NamedCommands.registerCommand("Run Feed Right", new ReleaseGripperFeedCommand(h_Holder, -1));
