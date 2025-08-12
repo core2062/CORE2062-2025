@@ -58,13 +58,19 @@ public class RobotContainer {
     private final JoystickButton runFeedRight = new JoystickButton(operator, Logitech.Button.kRightBumper.value);
     private final JoystickButton runFeedLeft = new JoystickButton(operator, Logitech.Button.kLeftBumper.value);
     
-    private final JoystickButton elevatorUp = new JoystickButton(operator, Logitech.Button.kA.value);
-    private final JoystickButton elevatorDown = new JoystickButton(operator, Logitech.Button.kB.value);
+    /*
+     * Move to left joystick Y
+     private final JoystickButton elevatorUp = new JoystickButton(operator, Logitech.Button.kA.value);
+     private final JoystickButton elevatorDown = new JoystickButton(operator, Logitech.Button.kB.value);
+     */
 
     private final JoystickButton algaeIntake = new JoystickButton(operator, Logitech.Button.kLeftTrigger.value);
     private final JoystickButton algaeOutake = new JoystickButton(operator, Logitech.Button.kRightTrigger.value);    
-    private final JoystickButton algaePivotRight = new JoystickButton(operator, Logitech.Button.kBack.value);    
-    private final JoystickButton algaePivotLeft = new JoystickButton(operator, Logitech.Button.kStart.value);    
+    /*
+     * Move to right Joystick Y
+     private final JoystickButton algaePivotRight = new JoystickButton(operator, Logitech.Button.kBack.value);    
+     private final JoystickButton algaePivotLeft = new JoystickButton(operator, Logitech.Button.kStart.value);    
+     */
 
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();

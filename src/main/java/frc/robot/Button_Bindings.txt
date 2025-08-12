@@ -8,8 +8,8 @@ D-Pad Left: Move to T2
 D-Pad Right: Move to T3
 D-Pad Down: Move to lowest Pose
 
-A button: Elevator Up
-B button: Elevator Down
+Left joystick Y up: Elevator Up
+Left joystick Y down: Elevator Down
 X button: Open Gripper/Clamp
 Y button: Close Gripper/Clamp
 
@@ -17,3 +17,22 @@ Left Bumper: Feed Coral Out Left
 Right Bumper: Feed Coral Out Right
 Left Trigger: Algae Intake
 Right Trigger: Algae Outtake
+
+Left Trigger: Alage Intake
+Right Trigger: Algae Out take
+Right Joystick Y up: Algae up
+RIght Joystick Y down: Algae down
+
+POV up: stage3
+POV right: stage2
+POV left: stage1
+POV down: stage0
+
+Button Y: Close Gripper
+Button X: Open Gripper
+
+Unused:
+Button A:
+Button B:
+Button Back:
+Button Start:
