@@ -218,7 +218,7 @@ public final class Constants {
         public static final double kReefStage2 = 27.775;
         public static final double kReefStage3 = 43.325;
         public static final double kReefStage4 = 67.65; // was 74.15
-        public static final double kReefStage4TipHeight = 69.65; // was 74.15
+        public static final double kReefStage4TipHeight = 71.65; // was 74.15
 
 
         public static ElevatorConfigs motorConfigs = new ElevatorConfigs();
