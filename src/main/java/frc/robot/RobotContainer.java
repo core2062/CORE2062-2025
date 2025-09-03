@@ -96,7 +96,12 @@ public class RobotContainer {
                 () -> robotCentric.getAsBoolean()
             )
         );
-        e_Elevator.setDefaultCommand(new ElevatorJoystickCommand(e_Elevator, () -> operator.getRawAxis(XboxController.Axis.kLeftY.value)));
+        e_Elevator.setDefaultCommand(
+            new ElevatorJoystickCommand(
+                e_Elevator, 
+                () -> operator.getRawAxis(XboxController.Axis.kLeftY.value)
+            )
+        );
 
         s_Swerve.gyro.setYaw(0);
         // Configure the button bindings

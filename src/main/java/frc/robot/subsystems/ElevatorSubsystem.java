@@ -74,6 +74,7 @@ public class ElevatorSubsystem extends SubsystemBase {
         }
         
         public Command elevatorLift(int coralPos){
+            System.out.println("calling elevatorLift");
             Command elevatorMovementCommand = new ElevatorMovementCommand(this, coralPos);
             return elevatorMovementCommand;
         }

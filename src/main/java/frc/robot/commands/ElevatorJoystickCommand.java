@@ -19,7 +19,10 @@ public class ElevatorJoystickCommand extends Command{
 
     @Override
     public void execute() {
-     e_Elevator.setLiftSpeed(m_speedSupplier.getAsDouble()*Constants.ElevatorConstants.kElevatorSpeed.get(0.0));
+        double y = -m_speedSupplier.getAsDouble()*Constants.ElevatorConstants.kElevatorSpeed.get(0.0);
+        if (Math.abs(y) > 0.02) {
+            e_Elevator.setLiftSpeed(y);
+        }
     }
 
     @Override

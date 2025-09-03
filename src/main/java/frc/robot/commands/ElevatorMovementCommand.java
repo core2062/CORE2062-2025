@@ -42,6 +42,7 @@ public class ElevatorMovementCommand extends Command{
 
     @Override
     public void execute() {
+        System.out.println("executing elevator movement command");
         // System.out.println(desiredAngle.getAsDouble());
         double currentPos = 0;
         final double MAX_SPEED_RPM = 3; // Maximum speed of the motor in RPM
