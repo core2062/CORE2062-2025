@@ -36,6 +36,7 @@ public final class Constants {
         public static final int kAlgaePivotMotorPort = 13;
 
         public static COREConstants kHoldSpeed = new COREConstants("Holding Speed of pivot motor for algae", 0.02);
+        public static COREConstants kAlgaeArmSpeed = new COREConstants("Max Algae Arm Speed Limiter", 0.6);
     }
 
     public static class HolderConstants{

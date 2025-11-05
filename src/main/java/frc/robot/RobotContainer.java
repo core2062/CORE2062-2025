@@ -102,6 +102,13 @@ public class RobotContainer {
                 () -> operator.getRawAxis(XboxController.Axis.kLeftY.value)
             )
         );
+        al_Algae.setDefaultCommand(
+            new AlgaePivotCommand(
+                al_Algae,
+                // axis is 3 since it is in X mode
+                () -> operator.getRawAxis(3)
+            )
+        );
 
         s_Swerve.gyro.setYaw(0);
         // Configure the button bindings
